@@ -1,168 +1,120 @@
-#include <pthread.h>
-#include <semaphore.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <pthread.h>
+#include <semaphore.h>
 
+#define NB_ECRITURES 640
+#define NB_LECTURES 2540
 
-int reader_count = 0; // Nombre de lecteurs actifs
-int total_reads = 0;  // Total de lectures effectuées
-int total_writes = 0; // Total d'écritures effectuées
-int max_reads, max_writes; // Limites pour les lectures et écritures
+pthread_mutex_t mutex;
+sem_t db; // Sémaphore pour l'accès à la base de données
+sem_t priority; // Priorité pour les écrivains
+int readcount = 0; // Nombre de lecteurs actifs
+int total_writes = 0;
+int total_reads = 0;
 
-// Mutex et sémaphores
-pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER; // Protéger reader_count
-sem_t resource;                                   // Gérer l'accès exclusif à la ressource
-sem_t queue;                                      // File d'attente équitable pour lecteurs/rédacteurs
-
-void readDbProcess(void){
-    for (size_t i = 0; i < 10000; i++){
-        /* ceci est une simulation*/
-    }
-    
-}
-
-void writeDbProcess(void){
-    for (size_t i = 0; i < 10000; i++){
-        /* ceci est une simulation*/
-    }
-    
-}
-
-void* reader(void* arg) {
-    int id = *(int*)arg;
-
+void *writer(void *arg) {
+    int id = *(int *)arg;
     while (1) {
         pthread_mutex_lock(&mutex);
-        if (total_reads >= max_reads) { // Vérifie si toutes les lectures ont été effectuées
+        if (total_writes >= NB_ECRITURES) {
             pthread_mutex_unlock(&mutex);
-            break;
+            break; // Stop si le nombre total d'écritures est atteint
         }
+        total_writes++;
         pthread_mutex_unlock(&mutex);
 
-        // Attente dans la file d'attente pour garantir l'équité
-        sem_wait(&queue);
+        sem_wait(&priority); // Empêche de nouveaux lecteurs d'entrer
+        sem_wait(&db); // Accès exclusif à la base de données
 
-        pthread_mutex_lock(&mutex);
-        if (reader_count == 0) {
-            sem_wait(&resource); // Premier lecteur bloque l'accès exclusif
-        }
-        reader_count++;
-        pthread_mutex_unlock(&mutex);
+        // Section critique : écriture simulée
+        for (int i = 0; i < 10000; i++);
+        printf("Écrivain %d a écrit. Écritures restantes: %d\n", id, NB_ECRITURES - total_writes);
 
-        // Signale que la file d'attente peut avancer
-        sem_post(&queue);
-
-        // Lecture dans la zone critique
-        pthread_mutex_lock(&mutex);
-        if (total_reads < max_reads) {
-            readDbProcess();
-
-            total_reads++;
-        }
-        pthread_mutex_unlock(&mutex);
-
-        pthread_mutex_lock(&mutex);
-        reader_count--;
-        if (reader_count == 0) {
-            sem_post(&resource); 
-        }
-        pthread_mutex_unlock(&mutex);
-
-        
+        sem_post(&db); // Libère l'accès à la base de données
+        sem_post(&priority); // Permet aux lecteurs d'entrer à nouveau
     }
-
     return NULL;
 }
 
-void* writer(void* arg) {
-    int id = *(int*)arg;
-
+void *reader(void *arg) {
+    int id = *(int *)arg;
     while (1) {
         pthread_mutex_lock(&mutex);
-        if (total_writes >= max_writes) { // Vérifie si toutes les écritures ont été effectuées
+        if (total_reads >= NB_LECTURES) {
             pthread_mutex_unlock(&mutex);
-            break;
+            break; // Stop si le nombre total de lectures est atteint
         }
+        total_reads++;
         pthread_mutex_unlock(&mutex);
 
-        // Attente dans la file d'attente pour garantir l'équité
-        sem_wait(&queue);
-
-        // Accès exclusif à la ressource partagée
-        sem_wait(&resource);
-
-        // Signale que la file d'attente peut avancer
-        sem_post(&queue);
-
-        // Écriture dans la zone critique
+        sem_wait(&priority); // Donne la priorité aux écrivains
         pthread_mutex_lock(&mutex);
-        if (total_writes < max_writes) {
-            writeDbProcess();
-            total_writes++;
+
+        readcount++;
+        if (readcount == 1) {
+            sem_wait(&db); // Premier lecteur bloque l'accès des écrivains
         }
+
         pthread_mutex_unlock(&mutex);
+        sem_post(&priority); // Permet aux écrivains d'attendre si nécessaire
 
-        sem_post(&resource); // Libère l'accès exclusif
+        // Section critique : lecture simulée
+        for (int i = 0; i < 10000; i++);
+        printf("Lecteur %d a lu. Lectures restantes: %d\n", id, NB_LECTURES - total_reads);
 
+        pthread_mutex_lock(&mutex);
+
+        readcount--;
+        if (readcount == 0) {
+            sem_post(&db); // Dernier lecteur libère l'accès aux écrivains
+        }
+
+        pthread_mutex_unlock(&mutex);
     }
-
     return NULL;
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
     if (argc != 3) {
-        fprintf(stderr, "Usage: %s <num_readers> <num_writers>\n", argv[0]);
-        return 1;
+        fprintf(stderr, "Usage: %s <nb_writers> <nb_readers>\n", argv[0]);
+        return EXIT_FAILURE;
     }
 
-    int num_readers = atoi(argv[1]);
-    int num_writers = atoi(argv[2]);
+    int nb_writers = atoi(argv[1]);
+    int nb_readers = atoi(argv[2]);
 
-    if (num_readers <= 0 || num_writers <= 0) {
-        fprintf(stderr, "Both the number of readers and writers must be positive integers.\n");
-        return 1;
+    pthread_t writers[nb_writers];
+    pthread_t readers[nb_readers];
+
+    int writer_ids[nb_writers];
+    int reader_ids[nb_readers];
+
+    pthread_mutex_init(&mutex, NULL);
+    sem_init(&db, 0, 1);
+    sem_init(&priority, 0, 1);
+
+    for (int i = 0; i < nb_writers; i++) {
+        writer_ids[i] = i + 1;
+        pthread_create(&writers[i], NULL, writer, &writer_ids[i]);
     }
 
-    // Limites pour les lectures et écritures
-    max_reads = 2540;
-    max_writes = 640;
-
-    pthread_t readers[num_readers];
-    pthread_t writers[num_writers];
-    
-
-    int readerIds[nbrLecteurs];
-    int writerIds[nbrEcrivains];
-
-    // Initialisation des sémaphores
-    sem_init(&resource, 0, 1); // Ressource partagée disponible
-    sem_init(&queue, 0, 1);    // File d'attente initialisée avec une unité
-
-    // Création des threads lecteurs
-    for (int i = 0; i < num_readers; i++) {
-        readerIds[i] = i + 1;
-        pthread_create(&readers[i], NULL, reader, &readerIds[i]);
+    for (int i = 0; i < nb_readers; i++) {
+        reader_ids[i] = i + 1;
+        pthread_create(&readers[i], NULL, reader, &reader_ids[i]);
     }
 
-    // Création des threads rédacteurs
-    for (int i = 0; i < num_writers; i++) {
-        writerIds[i] = i + 1;
-        pthread_create(&writers[i], NULL, writer, &writerIds[i]);
-    }
-
-    // Attente de la terminaison des threads
-    for (int i = 0; i < num_readers; i++) {
-        pthread_join(readers[i], NULL);
-    }
-    for (int i = 0; i < num_writers; i++) {
+    for (int i = 0; i < nb_writers; i++) {
         pthread_join(writers[i], NULL);
     }
 
-    // Destruction des sémaphores
-    sem_destroy(&resource);
-    sem_destroy(&queue);
+    for (int i = 0; i < nb_readers; i++) {
+        pthread_join(readers[i], NULL);
+    }
 
-    printf("All reads and writes have been completed.\n");
+    pthread_mutex_destroy(&mutex);
+    sem_destroy(&db);
+    sem_destroy(&priority);
 
-    return 0;
+    return EXIT_SUCCESS;
 }
