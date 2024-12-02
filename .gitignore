@@ -1,4 +1,4 @@
 venv/
-Objectfile
-Csvfile
-plots
+Objectfile/
+Csvfile/
+plots/
