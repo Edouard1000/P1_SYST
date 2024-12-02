@@ -23,7 +23,7 @@ $(OBJ_DIR)/pbPhilo: $(SRC_DIR)/pbPhilosophesVF.c | $(OBJ_DIR)
 $(OBJ_DIR)/prodCons: $(SRC_DIR)/prodConsvf.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) $< -o $@
 
-$(OBJ_DIR)/readerWriter: $(SRC_DIR)/read.c | $(OBJ_DIR)
+$(OBJ_DIR)/readerWriter: $(SRC_DIR)/read2.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) $< -o $@
 
 

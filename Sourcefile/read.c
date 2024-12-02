@@ -69,7 +69,7 @@ void* writer(void* arg){
 
         sem_wait(&writerSem);
        
-
+        printf("Writer %d: Writing...\n", id);
         writeDbProcess();
         sem_post(&writerSem);
         
@@ -114,7 +114,7 @@ void* reader(void* arg){
             sem_wait(&writerSem);
         }
         pthread_mutex_unlock(&mutexReader);
-        
+        printf("Reader %d: Reading...\n", id);
         readDbProcess();
         pthread_mutex_lock(&mutexReader);
         readCount--;
