@@ -49,6 +49,40 @@ elif [ "$PROG" == "prodCons" ]; then
         echo "" >> "$LOGS"
     done
 
+elif [ "$PROG" == "testVerrou" ]; then
+    for t in 1 2 4 8 16 32; do
+        echo -n "$t," >> "$LOGS"  # Ajouter le nombre de threads dans le fichier de log
+        echo "Running $t thread(s)..."
+
+        # Exécuter le programme ProdCons 5 fois et enregistrer les temps dans le fichier
+
+        for i in {1..5}; do
+            /usr/bin/time -f "%e" -o "$TEMP_DIR/measures" "$EXEC_PATH" "$t"
+            cat "$TEMP_DIR/measures" | tr -d "\n" >> "$LOGS"
+            if [ $i -lt 5 ]; then
+                echo -n "," >> "$LOGS"  # Ajouter une virgule entre les résultats
+            fi
+        done
+        echo "" >> "$LOGS"
+    done 
+
+elif [ "$PROG" == "testANDtest" ]; then
+    for t in 1 2 4 8 16 32; do
+        echo -n "$t," >> "$LOGS"  # Ajouter le nombre de threads dans le fichier de log
+        echo "Running $t thread(s)..."
+
+        # Exécuter le programme ProdCons 5 fois et enregistrer les temps dans le fichier
+
+        for i in {1..5}; do
+            /usr/bin/time -f "%e" -o "$TEMP_DIR/measures" "$EXEC_PATH" "$t"
+            cat "$TEMP_DIR/measures" | tr -d "\n" >> "$LOGS"
+            if [ $i -lt 5 ]; then
+                echo -n "," >> "$LOGS"  # Ajouter une virgule entre les résultats
+            fi
+        done
+        echo "" >> "$LOGS"
+    done        
+
 else
     # Si le programme n'est ni "pbPhilo" ni "prodCons"
     for t in $Threads; do
