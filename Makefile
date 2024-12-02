@@ -90,7 +90,7 @@ plotTestVerrou: CsvTestVerrou | $(PLOT_DIR)
 	python3 ./scriptPython.py $(CSV_DIR)/TestVerrou.csv $(PLOT_DIR)/TestVerrou_plot.png
 
 ###La commande à corriger pour avoir testAndTest et TestAndSet sur la meme figure   ( je fais ca le soir)
-plotTestAndTestAndSet: CsvTestVerrou  CsvTestAndTest $(PLOT_DIR)
+plotTestAndTestAndSet:
 	python3 ./scriptPython.py $(CSV_DIR)/TestVerrou.csv $(PLOT_DIR)/TestAndTestAndSet_plot.png $(CSV_DIR)/TestAndTest.csv
 
 
