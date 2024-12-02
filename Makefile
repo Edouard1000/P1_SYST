@@ -96,7 +96,7 @@ plotTestAndTestAndSet: CsvTestVerrou  CsvTestAndTest $(PLOT_DIR)
 
 ###Cette commande ne sert à rien juste pour voir que testANdTest fonctionne quand on le genere seul mais sur la meme figure avec test and set non
 plotTestAndTest: CsvTestAndTest $(PLOT_DIR)
-	python3 ./scriptPython.py $(CSV_DIR)/TestAndTest.csv $(PLOT_DIR)/TestAndTestAndSet_plot.png
+	python3 ./scriptPython.py $(CSV_DIR)/TestAndTest.csv $(PLOT_DIR)/TestAndTest_plot.png
 
 
 allPlot: plotPhilo plotProdCons plotReaderWriter plotTestVerrou

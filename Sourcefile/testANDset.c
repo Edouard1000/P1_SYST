@@ -21,19 +21,18 @@ void verrou_lock(int *verrou){
 void verrou_lock2(int *verrou) {
     __asm__ __volatile__(
         "start:                     \n"
+            "cmpl $0, %[verrou];     \n"  // Vérifie si verrou == 0 (test)
+            "jne start;              \n"  // Si verrou pris, boucle jusqu'à ce qu'il soit libéré
             "movl $1, %%eax;         \n"  // Charge 1 dans %eax
-            "xchgl %%eax, %[verrou]; \n"  // Échange atomique entre %eax et verrou
-            "testl %%eax, %%eax;     \n"  // Test si verrou == 0
-            "jne cache;              \n"  // Si verrou pris, passe en lecture passive
-        "cache:                     \n"
-            "cmpl $0, %[verrou];     \n"  // Vérifie si verrou == 0
-            "jne cache;              \n"  // Si verrou toujours pris, boucle
-            "jmp start;              \n"  // Sinon, retente de l'acquérir
+            "xchgl %%eax, %[verrou]; \n"  // Test-and-Set : verrouille atomiquement
+            "testl %%eax, %%eax;     \n"  // Vérifie si verrou a été pris avec succès
+            "jnz start;              \n"  // Si échoue (déjà pris), retente
             :
-            : [verrou] "m" (*verrou)       // Entrée : verrou (en mémoire)
-            : "%eax", "memory"             // Clobbers : %eax et mémoire
+            : [verrou] "m" (*verrou)       // Entrée : pointeur sur le verrou
+            : "%eax", "memory"             // Clobbers : registre %eax et mémoire
     );
 }
+
 
 void verrou_unlock(int *verrou) {
     __asm__ __volatile__ (

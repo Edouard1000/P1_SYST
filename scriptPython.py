@@ -102,11 +102,13 @@ elif fileName == 'Csvfile/ProdCons':
     titre = "Test de Performance Producteur-Consommateur"
 elif fileName == 'Csvfile/EcritLect':
     titre = "Test de Performance Ecriture-Lecture"
-elif fileName ==  'Csvfile/TestVerrou':
-    titre="Test de Performance Test-and-Set"
-
-elif fileName=='TestVerrou':
-    titre="Test de Performance Test-and-Set vs Test-and-Test-and-Set"
+elif fileName == 'Csvfile/TestAndTest':
+    titre = "Test de Performance Test-and-test-and-set"
+elif fileName == 'Csvfile/TestVerrou':
+    if paramatreDefaut:
+        titre = "Test de Performance Test-and-Set vs Test-and-Test-and-Set"
+    else:
+        titre = "Test de Performance Test-and-Set"
 else:
     titre = "Test de Performance Non Défini"
 
