@@ -29,7 +29,7 @@ void *writer(void *arg) {
 
         // Section critique : écriture simulée
         for (int i = 0; i < 10000; i++);
-        printf("Écrivain %d a écrit. Écritures restantes: %d\n", id, NB_ECRITURES - total_writes);
+        //printf("Écrivain %d a écrit. Écritures restantes: %d\n", id, NB_ECRITURES - total_writes);
 
         sem_post(&db); // Libère l'accès à la base de données
         sem_post(&priority); // Permet aux lecteurs d'entrer à nouveau
@@ -61,7 +61,7 @@ void *reader(void *arg) {
 
         // Section critique : lecture simulée
         for (int i = 0; i < 10000; i++);
-        printf("Lecteur %d a lu. Lectures restantes: %d\n", id, NB_LECTURES - total_reads);
+        //printf("Lecteur %d a lu. Lectures restantes: %d\n", id, NB_LECTURES - total_reads);
 
         pthread_mutex_lock(&mutex);
 
@@ -94,20 +94,24 @@ int main(int argc, char *argv[]) {
     sem_init(&db, 0, 1);
     sem_init(&priority, 0, 1);
 
+    // Création des threads écrivains
     for (int i = 0; i < nb_writers; i++) {
         writer_ids[i] = i + 1;
         pthread_create(&writers[i], NULL, writer, &writer_ids[i]);
     }
 
+    // Création des threads lecteurs
     for (int i = 0; i < nb_readers; i++) {
         reader_ids[i] = i + 1;
         pthread_create(&readers[i], NULL, reader, &reader_ids[i]);
     }
 
+    // Attente de la fin des threads écrivains
     for (int i = 0; i < nb_writers; i++) {
         pthread_join(writers[i], NULL);
     }
 
+    // Attente de la fin des threads lecteurs
     for (int i = 0; i < nb_readers; i++) {
         pthread_join(readers[i], NULL);
     }

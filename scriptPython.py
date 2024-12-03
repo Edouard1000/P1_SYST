@@ -109,6 +109,11 @@ elif fileName == 'Csvfile/TestVerrou':
         titre = "Test de Performance Test-and-Set vs Test-and-Test-and-Set"
     else:
         titre = "Test de Performance Test-and-Set"
+elif fileName == 'Csvfile/TestSemaphore':
+    if paramatreDefaut:
+        titre = "Test de Performance Test-and-Set vs Test-and-Test-and-Set"
+    else:
+        titre = "Test de Performance Semaphore - attente active"  
 else:
     titre = "Test de Performance Non Défini"
 
