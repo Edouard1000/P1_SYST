@@ -5,6 +5,7 @@
 #include <stdbool.h>
 
 int verrou;
+int compteur;
 int nbrThread;
 long global;
 
