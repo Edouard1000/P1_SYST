@@ -81,13 +81,11 @@ $(OBJ_DIR)/PhilosopesActive.o: $(SRC_DIR)/PhilosopesActive.c $(SRC_DIR)/headers.
 $(OBJ_DIR)/prodConsActive.o: $(SRC_DIR)/prodConsActive.c $(SRC_DIR)/headers.h | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/prodConsActive.c -o $@
 
-$(OBJ_DIR)/PhilosopesActive: $(OBJ_DIR)/PhilosopesActive.o | $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(OBJ_DIR)/PhilosopesActive.o -o $@ -lpthread
+$(OBJ_DIR)/PhilosopesActive: $(OBJ_DIR)/PhilosopesActive.o $(OBJ_DIR)/verrou.o | $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(OBJ_DIR)/PhilosopesActive.o $(OBJ_DIR)/verrou.o -o $@ -lpthread
 
-$(OBJ_DIR)/prodConsActive: $(OBJ_DIR)/prodConsActive.o | $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(OBJ_DIR)/prodConsActive.o -o $@ -lpthread
-
-
+$(OBJ_DIR)/prodConsActive: $(OBJ_DIR)/prodConsActive.o $(OBJ_DIR)/semaphoreImpl.o $(OBJ_DIR)/verrou.o | $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(OBJ_DIR)/prodConsActive.o $(OBJ_DIR)/semaphoreImpl.o $(OBJ_DIR)/verrou.o -o $@ -lpthread
 CsvpbPhilo: $(OBJ_DIR)/pbPhilo | $(CSV_DIR)
 	chmod +x scriptBash.sh
 	./scriptBash.sh $(OBJ_DIR)/pbPhilo $(CSV_DIR)/pbPhilo.csv
