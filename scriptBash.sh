@@ -116,6 +116,41 @@ elif [ "$PROG" == "testSemaphore2" ]; then
         echo "" >> "$LOGS"
     done 
 
+elif [ "$PROG" == "PhilosopesActive" ]; then
+    for t in $Threads; do
+        echo -n "$t," >> "$LOGS"  # Ajouter le nombre de threads dans le fichier de log
+        echo "Running $t thread(s)..."
+
+        # Exécuter le programme PhilosopesActive 5 fois et enregistrer les temps dans le fichier
+        for i in {1..5}; do
+            /usr/bin/time -f "%e" -o "$TEMP_DIR/measures" "$EXEC_PATH" "$t"
+            cat "$TEMP_DIR/measures" | tr -d "\n" >> "$LOGS"
+            if [ $i -lt 5 ]; then
+                echo -n "," >> "$LOGS"  # Ajouter une virgule entre les résultats
+            fi
+        done
+        echo "" >> "$LOGS"
+    done
+    
+elif [ "$PROG" == "prodConsActive" ]; then
+    for t in $Threads; do
+        echo -n "$t," >> "$LOGS"  # Ajouter le nombre de threads dans le fichier de log
+        echo "Running $t thread(s)..."
+
+        # Exécuter le programme prodConsActive 5 fois et enregistrer les temps dans le fichier
+        arg1=$((t/2))
+        arg2=$((t/2))
+        for i in {1..5}; do
+            /usr/bin/time -f "%e" -o "$TEMP_DIR/measures" "$EXEC_PATH" "$arg1" "$arg2"
+            cat "$TEMP_DIR/measures" | tr -d "\n" >> "$LOGS"
+            if [ $i -lt 5 ]; then
+                echo -n "," >> "$LOGS"  # Ajouter une virgule entre les résultats
+            fi
+        done
+        echo "" >> "$LOGS"
+    done
+
+
 else
     # Si le programme n'est ni "pbPhilo" ni "prodCons"
     for t in $Threads; do

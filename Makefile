@@ -74,6 +74,20 @@ OBJ_FILES3 = $(OBJ_DIR)/testSemaphore2.o $(OBJ_DIR)/semaphoreImpl.o
 $(OBJ_DIR)/testSemaphore2: $(OBJ_FILES2) | $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(OBJ_FILES2) -o $@ -lpthread
 
+############Tache 2.5 ################
+$(OBJ_DIR)/PhilosopesActive.o: $(SRC_DIR)/PhilosopesActive.c $(SRC_DIR)/headers.h | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/PhilosopesActive.c -o $@
+
+$(OBJ_DIR)/prodConsActive.o: $(SRC_DIR)/prodConsActive.c $(SRC_DIR)/headers.h | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/prodConsActive.c -o $@
+
+$(OBJ_DIR)/PhilosopesActive: $(OBJ_DIR)/PhilosopesActive.o | $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(OBJ_DIR)/PhilosopesActive.o -o $@ -lpthread
+
+$(OBJ_DIR)/prodConsActive: $(OBJ_DIR)/prodConsActive.o | $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(OBJ_DIR)/prodConsActive.o -o $@ -lpthread
+
+
 CsvpbPhilo: $(OBJ_DIR)/pbPhilo | $(CSV_DIR)
 	chmod +x scriptBash.sh
 	./scriptBash.sh $(OBJ_DIR)/pbPhilo $(CSV_DIR)/pbPhilo.csv
@@ -102,7 +116,15 @@ CsvTestSemaphore2: $(OBJ_DIR)/testSemaphore2 | $(CSV_DIR)
 	chmod +x scriptBash.sh
 	./scriptBash.sh $(OBJ_DIR)/testSemaphore2 $(CSV_DIR)/TestSemaphore2.csv
 
-allCsv: CsvpbPhilo CsvProdCons CsvReaderWriter CsvTestVerrou CsvTestAndTest CsvTestSemaphore CsvTestSemaphore2
+CsvPhilosopesActive: $(OBJ_DIR)/PhilosopesActive | $(CSV_DIR)
+	chmod +x scriptBash.sh
+	./scriptBash.sh $(OBJ_DIR)/PhilosopesActive $(CSV_DIR)/PhilosopesActive.csv
+
+CsvProdConsActive: $(OBJ_DIR)/prodConsActive | $(CSV_DIR)
+	chmod +x scriptBash.sh
+	./scriptBash.sh $(OBJ_DIR)/prodConsActive $(CSV_DIR)/ProdConsActive.csv
+
+allCsv: CsvpbPhilo CsvProdCons CsvReaderWriter CsvTestVerrou CsvTestAndTest CsvTestSemaphore CsvTestSemaphore2 CsvPhilosopesActive CsvProdConsActive
 
 plotPhilo: CsvpbPhilo | $(PLOT_DIR)
 	python3 scriptPython.py $(CSV_DIR)/pbPhilo.csv $(PLOT_DIR)/philo_plot.png
@@ -136,7 +158,15 @@ plotTestSemaphore2: CsvTestSemaphore2 | $(PLOT_DIR)
 plotSemComparaison: 
 	python3 ./scriptPython.py $(CSV_DIR)/TestSemaphore.csv $(PLOT_DIR)/SemComparaison_plot.png $(CSV_DIR)/TestSemaphore2.csv
 
-allPlot: plotPhilo plotProdCons plotReaderWriter plotTestVerrou plotTestSemaphore plotTestSemaphore2
+plotPhilosopesActive: CsvPhilosopesActive | $(PLOT_DIR)
+	python3 ./scriptPython.py $(CSV_DIR)/PhilosopesActive.csv $(PLOT_DIR)/PhilosopesActive_plot.png
+
+plotProdConsActive: CsvProdConsActive | $(PLOT_DIR)
+	python3 ./scriptPython.py $(CSV_DIR)/ProdConsActive.csv $(PLOT_DIR)/ProdConsActive_plot.png
+
+
+allPlot: plotPhilo plotProdCons plotReaderWriter plotTestVerrou plotTestAndTest plotTestSemaphore plotTestSemaphore2 plotPhilosopesActive plotProdConsActive
+
 
 # Nettoyage des fichiers objets et exécutables
 clean:

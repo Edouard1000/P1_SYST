@@ -117,6 +117,11 @@ elif fileName == 'Csvfile/TestSemaphore':
         titre = "Test de Performance comparaison semaphores"
     else:
         titre = "Test de Performance Semaphore - attente active"  
+elif fileName == 'Csvfile/PhilosopesActive':
+    titre = "Test de Performance Philosophe (Attente Active)"
+elif fileName == 'Csvfile/prodConsActive':
+    titre = "Test de Performance Producteur-Consommateur (Attente Active)"
+
 else:
     titre = "Test de Performance Non Défini"
 
