@@ -53,6 +53,20 @@ $(OBJ_DIR)/testANDtest: $(OBJ_FILES2) | $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(OBJ_FILES2) -o $@ -lpthread
 
 
+############Tache 2.4 ################
+
+$(OBJ_DIR)/semaphoreImpl.o: $(SRC_DIR)/semaphoreImpl.c $(SRC_DIR)/headers.h | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/semaphoreImpl.c -o $@
+
+$(OBJ_DIR)/testSemaphore.o: $(SRC_DIR)/testSemaphore.c $(SRC_DIR)/headers.h | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/testSemaphore.c -o $@
+
+OBJ_FILES3 = $(OBJ_DIR)/testSemaphore.o $(OBJ_DIR)/semaphoreImpl.o
+
+$(OBJ_DIR)/testSemaphore: $(OBJ_FILES3) | $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(OBJ_FILES3) -o $@ -lpthread
+
+
 CsvpbPhilo: $(OBJ_DIR)/pbPhilo | $(CSV_DIR)
 	chmod +x scriptBash.sh
 	./scriptBash.sh $(OBJ_DIR)/pbPhilo $(CSV_DIR)/pbPhilo.csv
@@ -72,8 +86,12 @@ CsvTestVerrou: $(OBJ_DIR)/testVerrou | $(CSV_DIR)
 CsvTestAndTest: $(OBJ_DIR)/testANDtest | $(CSV_DIR)
 	chmod +x scriptBash.sh
 	./scriptBash.sh $(OBJ_DIR)/testANDtest $(CSV_DIR)/TestAndTest.csv
+	
+CsvTestSemaphore: $(OBJ_DIR)/testSemaphore | $(CSV_DIR)
+	chmod +x scriptBash.sh
+	./scriptBash.sh $(OBJ_DIR)/testSemaphore $(CSV_DIR)/TestSemaphore.csv
 
-allCsv: CsvpbPhilo CsvProdCons CsvReaderWriter CsvTestVerrou CsvTestAndTest
+allCsv: CsvpbPhilo CsvProdCons CsvReaderWriter CsvTestVerrou CsvTestAndTest CsvTestSemaphore
 
 plotPhilo: CsvpbPhilo | $(PLOT_DIR)
 	python3 scriptPython.py $(CSV_DIR)/pbPhilo.csv $(PLOT_DIR)/philo_plot.png
@@ -98,8 +116,10 @@ plotTestAndTestAndSet:
 plotTestAndTest: CsvTestAndTest $(PLOT_DIR)
 	python3 ./scriptPython.py $(CSV_DIR)/TestAndTest.csv $(PLOT_DIR)/TestAndTest_plot.png
 
-
-allPlot: plotPhilo plotProdCons plotReaderWriter plotTestVerrou
+plotTestSemaphore: CsvTestSemaphore | $(PLOT_DIR)
+	python3 ./scriptPython.py $(CSV_DIR)/TestSemaphore.csv $(PLOT_DIR)/TestSemaphore_plot.png
+	
+allPlot: plotPhilo plotProdCons plotReaderWriter plotTestVerrou plotTestSemaphore
 
 # Nettoyage des fichiers objets et exécutables
 clean:
