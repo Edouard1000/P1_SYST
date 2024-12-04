@@ -88,11 +88,29 @@ $(OBJ_DIR)/testANDtest: $(OBJ_FILES2) | $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(OBJ_FILES2) -o $@ -lpthread
 
 ########Tache 2.5 : Utilisation des semaphores ( pas complet) ##########
+$(OBJ_DIR)/philosophesActive.o: $(SRC_DIR)/philosophesActive.c $(SRC_DIR)/headers.h | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/philosophesActive.c -o $@
+
+$(OBJ_DIR)/philosophesActive: $(OBJ_DIR)/philosophesActive.o $(OBJ_DIR)/verrou.o | $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(OBJ_DIR)/philosophesActive.o $(OBJ_DIR)/verrou.o -o $@ -lpthread
+$(OBJ_DIR)/philosophesActive2.o: $(SRC_DIR)/philosophesActive2.c $(SRC_DIR)/headers.h | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/philosophesActive2.c -o $@
+
+$(OBJ_DIR)/philosophesActive2: $(OBJ_DIR)/philosophesActive2.o $(OBJ_DIR)/verrou.o | $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(OBJ_DIR)/philosophesActive2.o $(OBJ_DIR)/verrou.o -o $@ -lpthread
+
+
+
 $(OBJ_DIR)/prodConsActive.o: $(SRC_DIR)/prodConsActive.c $(SRC_DIR)/headers.h | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/prodConsActive.c -o $@
 
 $(OBJ_DIR)/prodConsActive: $(OBJ_DIR)/prodConsActive.o $(OBJ_DIR)/verrou.o | $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(OBJ_DIR)/prodConsActive.o $(OBJ_DIR)/verrou.o -o $@ -lpthread
+$(OBJ_DIR)/prodConsActive2.o: $(SRC_DIR)/prodConsActive2.c $(SRC_DIR)/headers.h | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/prodConsActive2.c -o $@
+
+$(OBJ_DIR)/prodConsActive2: $(OBJ_DIR)/prodConsActive2.o $(OBJ_DIR)/verrou.o | $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(OBJ_DIR)/prodConsActive2.o $(OBJ_DIR)/verrou.o -o $@ -lpthread
 
 $(OBJ_DIR)/readActive.o: $(SRC_DIR)/readActive.c $(SRC_DIR)/headers.h | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/readActive.c -o $@
@@ -135,10 +153,20 @@ CsvTestVerrou: $(OBJ_DIR)/testVerrou | $(CSV_DIR)
 CsvTestAndTest: $(OBJ_DIR)/testANDtest | $(CSV_DIR)
 	chmod +x scriptBash.sh
 	./scriptBash.sh $(OBJ_DIR)/testANDtest $(CSV_DIR)/TestAndTest.csv
+CsvPhilosopesActive: $(OBJ_DIR)/philosophesActive | $(CSV_DIR)
+	chmod +x scriptBash.sh
+	./scriptBash.sh $(OBJ_DIR)/philosophesActive $(CSV_DIR)/philosophesActive.csv
+CsvPhilosopesActive2: $(OBJ_DIR)/philosophesActive2 | $(CSV_DIR)
+	chmod +x scriptBash.sh
+	./scriptBash.sh $(OBJ_DIR)/philosophesActive2 $(CSV_DIR)/philosophesActive2.csv
+
 
 CsvProdConsActive: $(OBJ_DIR)/prodConsActive | $(CSV_DIR)
 	chmod +x scriptBash.sh
 	./scriptBash.sh $(OBJ_DIR)/prodConsActive $(CSV_DIR)/ProdConsActive.csv
+CsvProdConsActive2: $(OBJ_DIR)/prodConsActive2 | $(CSV_DIR)
+	chmod +x scriptBash.sh
+	./scriptBash.sh $(OBJ_DIR)/prodConsActive2 $(CSV_DIR)/prodConsActive2.csv
 
 CsvReadActive: $(OBJ_DIR)/readActive | $(CSV_DIR)
 	chmod +x scriptBash.sh
