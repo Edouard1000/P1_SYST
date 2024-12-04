@@ -136,10 +136,10 @@ CsvProdConsActive: $(OBJ_DIR)/prodConsActive | $(CSV_DIR)
 # Génération des graphes pour tous les fichiers CSV
 plots: $(addprefix $(PLOT_DIR)/, $(CSV_FILES:.csv=.png))
 
-# Règle pour générer un graphique à partir d'un fichier CSV
+# Règle pour générer un graphique à partir d'un fichier CSV prevenant de DataInginious
 $(PLOT_DIR)/%.png: $(DATA_DIR)/%.csv $(SCRIPT) | $(PLOT_DIR)
 	python3 $(SCRIPT) $< $@ 
-	
+
 #allCsv: CsvpbPhilo CsvProdCons CsvReaderWriter CsvTestVerrou CsvTestAndTest CsvProdConsActive  //Je sais pas si c'est necessaire pour Inginious
 
 
