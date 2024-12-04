@@ -5,10 +5,10 @@ OBJ_DIR = Objectfile
 CSV_DIR = Csvfile
 SRC_DIR = Sourcefile
 BASH_DIR = Bashfile
-PLOT_DIR = plots
 
 
-# Chemins des dossiers
+
+# Chemins des dossiers pour les plots
 PLOT_DIR = plots
 DATA_DIR = DataIngInious
 SCRIPT = ../scriptPython.py
@@ -133,12 +133,15 @@ CsvProdConsActive: $(OBJ_DIR)/prodConsActive | $(CSV_DIR)
 
 ####### Fin des cibles pour Csv: (Attention) Pas complet #######
 
+# Génération des graphes pour tous les fichiers CSV
+plots: $(addprefix $(PLOT_DIR)/, $(CSV_FILES:.csv=.png))
 
+# Règle pour générer un graphique à partir d'un fichier CSV
+$(PLOT_DIR)/%.png: $(DATA_DIR)/%.csv $(SCRIPT) | $(PLOT_DIR)
+	python3 $(SCRIPT) $< $@ 
+	
 #allCsv: CsvpbPhilo CsvProdCons CsvReaderWriter CsvTestVerrou CsvTestAndTest CsvProdConsActive  //Je sais pas si c'est necessaire pour Inginious
 
-# Génération des plots pour chaque fichier CSV
-$(PLOT_DIR)/%.png: $(DATA_DIR)/%.csv $(SCRIPT) | $(PLOT_DIR)
-	python3 $(SCRIPT) $< $@
 
 # Nettoyage des fichiers objets et exécutables
 clean:
