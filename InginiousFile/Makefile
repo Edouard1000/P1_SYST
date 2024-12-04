@@ -11,7 +11,7 @@ BASH_DIR = Bashfile
 # Chemins des dossiers pour les plots
 PLOT_DIR = plots
 DATA_DIR = DataIngInious
-SCRIPT = ../scriptPython.py
+SCRIPT = scriptPython.py
 
 # Liste des fichiers CSV
 CSV_FILES = \
