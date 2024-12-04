@@ -102,11 +102,26 @@ elif fileName == 'Csvfile/ProdCons':
     titre = "Test de Performance Producteur-Consommateur"
 elif fileName == 'Csvfile/EcritLect':
     titre = "Test de Performance Ecriture-Lecture"
-elif fileName ==  'Csvfile/TestVerrou':
-    titre="Test de Performance Test-and-Set"
+elif fileName == 'Csvfile/TestAndTest':
+    titre = "Test de Performance Test-and-test-and-set"
+elif fileName == 'Csvfile/TestVerrou':
+    if paramatreDefaut:
+        titre = "Test de Performance Test-and-Set vs Test-and-Test-and-Set"
+    else:
+        titre = "Test de Performance Test-and-Set"
+elif fileName == 'Csvfile/TestSemaphore2':
+    titre = "Test de Performance Semaphore (test-and-test)"
 
-elif fileName=='TestVerrou':
-    titre="Test de Performance Test-and-Set vs Test-and-Test-and-Set"
+elif fileName == 'Csvfile/TestSemaphore':
+    if paramatreDefaut:
+        titre = "Test de Performance comparaison semaphores"
+    else:
+        titre = "Test de Performance Semaphore - attente active"  
+elif fileName == 'Csvfile/PhilosopesActive':
+    titre = "Test de Performance Philosophe (Attente Active)"
+elif fileName == 'Csvfile/prodConsActive':
+    titre = "Test de Performance Producteur-Consommateur (Attente Active)"
+
 
 elif fileName == 'Csvfile/prodConsActive':
     titre = "Test de Performance Producteur-Consommateur (Attente Active)"

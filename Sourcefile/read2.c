@@ -94,20 +94,24 @@ int main(int argc, char *argv[]) {
     sem_init(&db, 0, 1);
     sem_init(&priority, 0, 1);
 
+    // Création des threads écrivains
     for (int i = 0; i < nb_writers; i++) {
         writer_ids[i] = i + 1;
         pthread_create(&writers[i], NULL, writer, &writer_ids[i]);
     }
 
+    // Création des threads lecteurs
     for (int i = 0; i < nb_readers; i++) {
         reader_ids[i] = i + 1;
         pthread_create(&readers[i], NULL, reader, &reader_ids[i]);
     }
 
+    // Attente de la fin des threads écrivains
     for (int i = 0; i < nb_writers; i++) {
         pthread_join(writers[i], NULL);
     }
 
+    // Attente de la fin des threads lecteurs
     for (int i = 0; i < nb_readers; i++) {
         pthread_join(readers[i], NULL);
     }
