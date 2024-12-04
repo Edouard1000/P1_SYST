@@ -93,6 +93,11 @@ $(OBJ_DIR)/prodConsActive.o: $(SRC_DIR)/prodConsActive.c $(SRC_DIR)/headers.h | 
 
 $(OBJ_DIR)/prodConsActive: $(OBJ_DIR)/prodConsActive.o $(OBJ_DIR)/verrou.o | $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(OBJ_DIR)/prodConsActive.o $(OBJ_DIR)/verrou.o -o $@ -lpthread
+$(OBJ_DIR)/prodConsActive2.o: $(SRC_DIR)/prodConsActive2.c $(SRC_DIR)/headers.h | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/prodConsActive2.c -o $@
+
+$(OBJ_DIR)/prodConsActive2: $(OBJ_DIR)/prodConsActive2.o $(OBJ_DIR)/verrou.o | $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(OBJ_DIR)/prodConsActive2.o $(OBJ_DIR)/verrou.o -o $@ -lpthread
 
 $(OBJ_DIR)/readActive.o: $(SRC_DIR)/readActive.c $(SRC_DIR)/headers.h | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/readActive.c -o $@
@@ -139,6 +144,9 @@ CsvTestAndTest: $(OBJ_DIR)/testANDtest | $(CSV_DIR)
 CsvProdConsActive: $(OBJ_DIR)/prodConsActive | $(CSV_DIR)
 	chmod +x scriptBash.sh
 	./scriptBash.sh $(OBJ_DIR)/prodConsActive $(CSV_DIR)/ProdConsActive.csv
+CsvProdConsActive2: $(OBJ_DIR)/prodConsActive2 | $(CSV_DIR)
+	chmod +x scriptBash.sh
+	./scriptBash.sh $(OBJ_DIR)/prodConsActive2 $(CSV_DIR)/prodConsActive2.csv
 
 CsvReadActive: $(OBJ_DIR)/readActive | $(CSV_DIR)
 	chmod +x scriptBash.sh
