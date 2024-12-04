@@ -98,6 +98,10 @@ $(OBJ_DIR)/readActive.o: $(SRC_DIR)/readActive.c $(SRC_DIR)/headers.h | $(OBJ_DI
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/readActive.c -o $@
 $(OBJ_DIR)/readActive: $(OBJ_DIR)/readActive.o $(OBJ_DIR)/verrou.o | $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(OBJ_DIR)/readActive.o $(OBJ_DIR)/verrou.o -o $@ -lpthread
+$(OBJ_DIR)/readActive2.o: $(SRC_DIR)/readActive2.c $(SRC_DIR)/headers.h | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/readActive2.c -o $@
+$(OBJ_DIR)/readActive2: $(OBJ_DIR)/readActive2.o $(OBJ_DIR)/verrou.o | $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(OBJ_DIR)/readActive2.o $(OBJ_DIR)/verrou.o -o $@ -lpthread
 
 ############# Fin Tache 2 ##################
 
@@ -139,6 +143,10 @@ CsvProdConsActive: $(OBJ_DIR)/prodConsActive | $(CSV_DIR)
 CsvReadActive: $(OBJ_DIR)/readActive | $(CSV_DIR)
 	chmod +x scriptBash.sh
 	./scriptBash.sh $(OBJ_DIR)/readActive $(CSV_DIR)/readActive.csv
+
+CsvReadActive2: $(OBJ_DIR)/readActive2 | $(CSV_DIR)
+	chmod +x scriptBash.sh
+	./scriptBash.sh $(OBJ_DIR)/readActive2 $(CSV_DIR)/readActive2.csv
 ####### Fin des cibles pour Csv: (Attention) Pas complet #######
 
 # Génération des graphes pour tous les fichiers CSV

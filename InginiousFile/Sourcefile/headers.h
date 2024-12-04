@@ -9,6 +9,9 @@ void verrou_unlock(int *verrou);
 void semaphore_wait(int *compteur);
 void semaphore_post(int *compteur);
 
+void semaphore_wait2(int *compteur);
+void semaphore_post2(int *compteur);
+
 
 
 
