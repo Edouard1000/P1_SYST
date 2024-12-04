@@ -173,7 +173,45 @@ elif [ "$PROG" == "prodConsActive" ]; then
         echo ""
     done
 
-elif [ "$PROG" == "readerWriter2" ]; then
+elif [ "$PROG" == "readActive" ]; then
+  echo -e "Running $PROG...\n"
+    for t in $Threads; do
+        echo -n "$t," # Ajouter le nombre de threads dans le fichier dans la sortie Standart
+
+        # Exécuter le programme ProdCons 5 fois et enregistrer les temps dans le fichier
+        arg1=$((t/2))
+        arg2=$((t/2))
+        for i in {1..5}; do
+            /usr/bin/time -f "%e" -o "$TEMP_DIR/measures" "$EXEC_PATH" "$arg1" "$arg2"
+            cat "$TEMP_DIR/measures" | tr -d "\n"
+            
+            if [ $i -lt 5 ]; then
+                echo -n ","  # Ajouter une virgule entre les résultats
+            fi
+        done
+        echo ""
+    done 
+
+elif [ "$PROG" == "readActive2" ]; then
+  echo -e "Running $PROG...\n"
+    for t in $Threads; do
+        echo -n "$t," # Ajouter le nombre de threads dans le fichier dans la sortie Standart
+
+        # Exécuter le programme ProdCons 5 fois et enregistrer les temps dans le fichier
+        arg1=$((t/2))
+        arg2=$((t/2))
+        for i in {1..5}; do
+            /usr/bin/time -f "%e" -o "$TEMP_DIR/measures" "$EXEC_PATH" "$arg1" "$arg2"
+            cat "$TEMP_DIR/measures" | tr -d "\n"
+            
+            if [ $i -lt 5 ]; then
+                echo -n ","  # Ajouter une virgule entre les résultats
+            fi
+        done
+        echo ""
+    done      
+
+elif [ "$PROG" == "readerWriter" ]; then
 
         echo -e "Running $PROG...\n"
     for t in $Threads; do

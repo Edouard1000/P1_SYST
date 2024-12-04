@@ -14,7 +14,7 @@ DATA_DIR = DataInginious
 SCRIPT = scriptPython.py
 
 # Liste des fichiers CSV
-CSV_FILES = \
+#CSV_FILES = \
 	EcritLect2Ingi.csv \
 	EcritLectIngi.csv \
 	pbPhiloIngi.csv \
@@ -26,9 +26,9 @@ CSV_FILES = \
 
 
 
-all: CsvTestVerrou CsvTestAndTest CsvProdConsActive
+all: CsvPhilosopesActive CsvPhilosopesActive2
 
-#CsvpbPhilo CsvProdCons CsvProdCons2 CsvReaderWriter CsvReaderWriter2 CsvTestVerrou CsvTestAndTest CsvProdConsActive
+#CsvpbPhilo CsvPhilosopesActive CsvPhilosopesActive2 CsvProdCons CsvProdCons2 CsvReaderWriter CsvReaderWriter2 CsvTestVerrou CsvTestAndTest CsvProdConsActive CsvProdConsActive2 CsvReadActive CsvReadActive2
 
 # Créer les répertoires nécessaires
 $(OBJ_DIR):
