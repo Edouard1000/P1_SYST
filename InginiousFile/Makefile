@@ -142,6 +142,12 @@ plot: $(PNG_FILES)
 
 $(PLOT_DIR)/%.png: $(DATA_DIR)/%.csv $(SCRIPT) | $(PLOT_DIR)
 	python3 $(SCRIPT) $< $@
+
+# plot TASvsTATAS
+PLOT_OUTPUT = plots/TASvsTATAS.png
+TASvsTATAS: $(SCRIPT)
+	python3 $(SCRIPT) $(DATA_DIR)/TestVerrouIngi.csv $(PLOT_OUTPUT) $(DATA_DIR)/TestAndTestIngi.csv
+
 #allCsv: CsvpbPhilo CsvProdCons CsvReaderWriter CsvTestVerrou CsvTestAndTest CsvProdConsActive  //Je sais pas si c'est necessaire pour Inginious
 
 
