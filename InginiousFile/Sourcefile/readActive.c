@@ -16,9 +16,9 @@ int writeCount = 0;                // S'assure de stopper/relancer un thread qui
 int readCount = 0;                 // S'assure de stopper/relancer un thread qui souhaite écrire sur la BD dès qu'un thread de lecture est prête/terminée
 
 // Variables pour les mutex et sémaphores personnalisés
-int verrouCount = 1;
-int verrouReader = 1;
-int verrouWriter = 1;
+int verrouCount = 0;
+int verrouReader = 0;
+int verrouWriter = 0;
 
 int writerSem = 1;
 int readerSem = 1;
