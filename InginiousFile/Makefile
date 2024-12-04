@@ -7,6 +7,25 @@ SRC_DIR = Sourcefile
 BASH_DIR = Bashfile
 PLOT_DIR = plots
 
+
+# Chemins des dossiers
+PLOT_DIR = plots
+DATA_DIR = DataIngInious
+SCRIPT = ../scriptPython.py
+
+# Liste des fichiers CSV
+CSV_FILES = \
+	EcritLect2Ingi.csv \
+	EcritLectIngi.csv \
+	pbPhiloIngi.csv \
+	ProdCons2Ingi.csv \
+	ProdConsActiveIngi.csv \
+	ProdConsIngi.csv \
+	TestAndTestIngi.csv \
+	TestVerrouIngi.csv
+
+
+
 all: CsvTestVerrou CsvTestAndTest CsvProdConsActive
 
 #CsvpbPhilo CsvProdCons CsvProdCons2 CsvReaderWriter CsvReaderWriter2 CsvTestVerrou CsvTestAndTest CsvProdConsActive
@@ -117,7 +136,9 @@ CsvProdConsActive: $(OBJ_DIR)/prodConsActive | $(CSV_DIR)
 
 #allCsv: CsvpbPhilo CsvProdCons CsvReaderWriter CsvTestVerrou CsvTestAndTest CsvProdConsActive  //Je sais pas si c'est necessaire pour Inginious
 
-
+# Génération des plots pour chaque fichier CSV
+$(PLOT_DIR)/%.png: $(DATA_DIR)/%.csv $(SCRIPT) | $(PLOT_DIR)
+	python3 $(SCRIPT) $< $@
 
 # Nettoyage des fichiers objets et exécutables
 clean:
