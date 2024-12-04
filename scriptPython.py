@@ -107,6 +107,10 @@ elif fileName ==  'Csvfile/TestVerrou':
 
 elif fileName=='TestVerrou':
     titre="Test de Performance Test-and-Set vs Test-and-Test-and-Set"
+
+elif fileName == 'Csvfile/prodConsActive':
+    titre = "Test de Performance Producteur-Consommateur (Attente Active)"
+
 else:
     titre = "Test de Performance Non Défini"
 
