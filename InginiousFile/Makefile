@@ -12,7 +12,7 @@ BASH_DIR = Bashfile
 PLOT_DIR = plots
 DATA_DIR = DataInginious
 SCRIPT = scriptPython.py
-
+SCRIPT2 = scriptPython3Graphs.py
 # Liste des fichiers CSV
 #CSV_FILES = \
 	EcritLect2Ingi.csv \
@@ -191,7 +191,9 @@ $(PLOT_DIR)/%.png: $(DATA_DIR)/%.csv $(SCRIPT) | $(PLOT_DIR)
 PLOT_OUTPUT = plots/TASvsTATAS.png
 TASvsTATAS: $(SCRIPT)
 	python3 $(SCRIPT) $(DATA_DIR)/TestVerrouIngi.csv $(PLOT_OUTPUT) $(DATA_DIR)/TestAndTestIngi.csv
-
+#plot comparaison 3 graphs : 
+Comparaison3Graphs: $(SCRIPT2)
+	python3 $(SCRIPT2) $(DATA_DIR)/TestVerrouIngi.csv $(PLOT_OUTPUT) $(DATA_DIR)/TestAndTestIngi.csv
 #allCsv: CsvpbPhilo CsvProdCons CsvReaderWriter CsvTestVerrou CsvTestAndTest CsvProdConsActive  //Je sais pas si c'est necessaire pour Inginious
 
 
