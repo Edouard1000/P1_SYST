@@ -37,6 +37,45 @@ if [ "$PROG" == "pbPhilo" ]; then
         echo ""  # Saut de ligne après avoir affiché les 5 résultats
     done
 
+elif [ "$PROG" == "philosophesActive" ]; then
+    
+    echo -e "Running $PROG...\n"
+    for t in $Threads; do
+        echo -n "$t,"  # Afficher le nombre de threads dans la sortie standard
+
+
+        # Exécuter le programme Philosophe 5 fois et afficher les temps dans la sortie standard
+        for i in {1..5}; do
+            /usr/bin/time -f "%e" -o "$TEMP_DIR/measures" "$EXEC_PATH" "$t"
+            cat "$TEMP_DIR/measures" | tr -d "\n"
+            
+            # Si ce n'est pas la dernière exécution, ajouter une virgule
+            if [ $i -lt 5 ]; then
+                echo -n ","  # Ajouter une virgule entre les résultats
+            fi
+        done
+        echo ""  # Saut de ligne après avoir affiché les 5 résultats
+    done
+elif [ "$PROG" == "philosophesActive2" ]; then
+    
+    echo -e "Running $PROG...\n"
+    for t in $Threads; do
+        echo -n "$t,"  # Afficher le nombre de threads dans la sortie standard
+
+
+        # Exécuter le programme Philosophe 5 fois et afficher les temps dans la sortie standard
+        for i in {1..5}; do
+            /usr/bin/time -f "%e" -o "$TEMP_DIR/measures" "$EXEC_PATH" "$t"
+            cat "$TEMP_DIR/measures" | tr -d "\n"
+            
+            # Si ce n'est pas la dernière exécution, ajouter une virgule
+            if [ $i -lt 5 ]; then
+                echo -n ","  # Ajouter une virgule entre les résultats
+            fi
+        done
+        echo ""  # Saut de ligne après avoir affiché les 5 résultats
+    done
+
 
 elif [ "$PROG" == "prodCons" ]; then
 
