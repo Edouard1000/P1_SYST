@@ -91,7 +91,12 @@ def creer_graphique_combine(titre, nom_sortie):
     plt.show()  # Afficher le graphique
 
 # Déterminer le titre basé sur les fichiers d'entrée
-titre = "Comparaison des Performances Philosophes : Sans TAS, Avec TAS, Avec TATAS"
-
+base_name = os.path.splitext(os.path.basename(fileCSV1))[0]
+if base_name == "pbPhiloIngi":
+    titre = "Comparaison des Performances Philosophes : Sans TAS, Avec TAS, Avec TATAS"
+elif base_name == "prodCons2Ingi":
+    titre = "Comparaison des Performances Prod/cons : Sans TAS, Avec TAS, Avec TATAS"
+elif base_name == "EcritLect2Ingi":
+    titre = "Comparaison des Performances Writer/reader : Sans TAS, Avec TAS, Avec TATAS"
 # Créer le graphique combiné
 creer_graphique_combine(titre, outputFile)
