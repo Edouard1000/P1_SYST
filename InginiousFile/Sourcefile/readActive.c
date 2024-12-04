@@ -1,4 +1,5 @@
 #include "headers.h"
+#include <pthread.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <unistd.h>
