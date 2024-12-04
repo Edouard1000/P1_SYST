@@ -91,7 +91,7 @@ def creer_graphique_combine(titre, nom_sortie):
     plt.show()  # Afficher le graphique
 
 # Déterminer le titre basé sur les fichiers d'entrée
-titre = "Comparaison des Performances : Sans TAS, Avec TAS, Avec TATAS"
+titre = "Comparaison des Performances Philosophes : Sans TAS, Avec TAS, Avec TATAS"
 
 # Créer le graphique combiné
 creer_graphique_combine(titre, outputFile)

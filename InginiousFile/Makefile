@@ -192,8 +192,9 @@ PLOT_OUTPUT = plots/TASvsTATAS.png
 TASvsTATAS: $(SCRIPT)
 	python3 $(SCRIPT) $(DATA_DIR)/TestVerrouIngi.csv $(PLOT_OUTPUT) $(DATA_DIR)/TestAndTestIngi.csv
 #plot comparaison 3 graphs : 
+PLOT_OUTPUT_COMPARAISON = plots/Comparaison3Graphs.png
 Comparaison3Graphs: $(SCRIPT2)
-	python3 $(SCRIPT2) $(DATA_DIR)/TestVerrouIngi.csv $(PLOT_OUTPUT) $(DATA_DIR)/TestAndTestIngi.csv
+	python3 $(SCRIPT2) $(DATA_DIR)/pbPhiloIngi.csv $(PLOT_OUTPUT_COMPARAISON) $(DATA_DIR)/philosophesActiveIngi.csv $(DATA_DIR)/philosophesActive2Ingi.csv 
 #allCsv: CsvpbPhilo CsvProdCons CsvReaderWriter CsvTestVerrou CsvTestAndTest CsvProdConsActive  //Je sais pas si c'est necessaire pour Inginious
 
 
