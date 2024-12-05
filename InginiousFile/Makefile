@@ -26,7 +26,7 @@ SCRIPT2 = scriptPython3Graphs.py
 
 
 
-all: CsvPhilosopesActive CsvPhilosopesActive2
+all: CsvReadActive CsvReadActive2
 
 #CsvpbPhilo CsvPhilosopesActive CsvPhilosopesActive2 CsvProdCons CsvProdCons2 CsvReaderWriter CsvReaderWriter2 CsvTestVerrou CsvTestAndTest CsvProdConsActive CsvProdConsActive2 CsvReadActive CsvReadActive2
 
@@ -64,7 +64,7 @@ $(OBJ_DIR)/readerWriter2: $(SRC_DIR)/read2.c | $(OBJ_DIR)
 
 ############Fin Tache 1################
 
-############Tache 2.1 : Test and Set ################
+############Tache 2.1 : Test and Set compilation(Objets) et cibles ################
 $(OBJ_DIR)/verrou.o: $(SRC_DIR)/testANDset.c $(SRC_DIR)/headers.h | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/testANDset.c -o $@
 
@@ -77,7 +77,7 @@ OBJ_FILES = $(OBJ_DIR)/testVerrou.o $(OBJ_DIR)/verrou.o
 $(OBJ_DIR)/testVerrou: $(OBJ_FILES) | $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(OBJ_FILES) -o $@ -lpthread	
 
-############Tache 2.2 : Test and Test ################
+############Tache 2.2 : Test and Test compilation(Objets) et cibles################
 
 $(OBJ_DIR)/testANDtest.o: $(SRC_DIR)/testANDtest.c $(SRC_DIR)/headers.h | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/testANDtest.c -o $@
@@ -87,39 +87,43 @@ OBJ_FILES2 = $(OBJ_DIR)/testANDtest.o $(OBJ_DIR)/verrou.o
 $(OBJ_DIR)/testANDtest: $(OBJ_FILES2) | $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(OBJ_FILES2) -o $@ -lpthread
 
-########Tache 2.5 : Utilisation des semaphores ( pas complet) ##########
+########Tache 2.5 : Utilisation des semaphores ##########
+
+#Philosophes actifs 1 & 2 (fichiers objets et cibles)
 $(OBJ_DIR)/philosophesActive.o: $(SRC_DIR)/philosophesActive.c $(SRC_DIR)/headers.h | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/philosophesActive.c -o $@
-
 $(OBJ_DIR)/philosophesActive: $(OBJ_DIR)/philosophesActive.o $(OBJ_DIR)/verrou.o | $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(OBJ_DIR)/philosophesActive.o $(OBJ_DIR)/verrou.o -o $@ -lpthread
+
 $(OBJ_DIR)/philosophesActive2.o: $(SRC_DIR)/philosophesActive2.c $(SRC_DIR)/headers.h | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/philosophesActive2.c -o $@
-
 $(OBJ_DIR)/philosophesActive2: $(OBJ_DIR)/philosophesActive2.o $(OBJ_DIR)/verrou.o | $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(OBJ_DIR)/philosophesActive2.o $(OBJ_DIR)/verrou.o -o $@ -lpthread
+#Fin Philosophes actifs 1 & 2 (fichiers objets et cibles)
 
-
-
+#Production et consommation active 1 & 2 (fichiers objets et cibles)
 $(OBJ_DIR)/prodConsActive.o: $(SRC_DIR)/prodConsActive.c $(SRC_DIR)/headers.h | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/prodConsActive.c -o $@
-
 $(OBJ_DIR)/prodConsActive: $(OBJ_DIR)/prodConsActive.o $(OBJ_DIR)/verrou.o | $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(OBJ_DIR)/prodConsActive.o $(OBJ_DIR)/verrou.o -o $@ -lpthread
+
 $(OBJ_DIR)/prodConsActive2.o: $(SRC_DIR)/prodConsActive2.c $(SRC_DIR)/headers.h | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/prodConsActive2.c -o $@
-
 $(OBJ_DIR)/prodConsActive2: $(OBJ_DIR)/prodConsActive2.o $(OBJ_DIR)/verrou.o | $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(OBJ_DIR)/prodConsActive2.o $(OBJ_DIR)/verrou.o -o $@ -lpthread
+#Fin Production et consommation active 1 & 2 (fichiers objets et cibles)
 
+#Ecritures et Lectures active 1 & 2 (fichiers objets et cibles)
 $(OBJ_DIR)/readActive.o: $(SRC_DIR)/readActive.c $(SRC_DIR)/headers.h | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/readActive.c -o $@
 $(OBJ_DIR)/readActive: $(OBJ_DIR)/readActive.o $(OBJ_DIR)/verrou.o | $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(OBJ_DIR)/readActive.o $(OBJ_DIR)/verrou.o -o $@ -lpthread
+
 $(OBJ_DIR)/readActive2.o: $(SRC_DIR)/readActive2.c $(SRC_DIR)/headers.h | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/readActive2.c -o $@
 $(OBJ_DIR)/readActive2: $(OBJ_DIR)/readActive2.o $(OBJ_DIR)/verrou.o | $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(OBJ_DIR)/readActive2.o $(OBJ_DIR)/verrou.o -o $@ -lpthread
+#Ecritures et Lectures active  1 & 2 (fichiers objets et cibles)
 
 ############# Fin Tache 2 ##################
 
@@ -189,7 +193,7 @@ $(PLOT_DIR)/%.png: $(DATA_DIR)/%.csv $(SCRIPT) | $(PLOT_DIR)
 
 # plot TASvsTATAS
 PLOT_OUTPUT = plots/TASvsTATAS.png
-TASvsTATAS: $(SCRIPT)
+TASvsTATAS: $(SCRIPT) | $(PLOT_DIR)
 	python3 $(SCRIPT) $(DATA_DIR)/TestVerrouIngi.csv $(PLOT_OUTPUT) $(DATA_DIR)/TestAndTestIngi.csv
 #plot comparaison 3 graphs : 
 PLOT_OUTPUT_COMPARAISON1 = plots/Comparaison3Graphs1.png
@@ -197,7 +201,7 @@ Comparaison3Graphs1: $(SCRIPT2)
 	python3 $(SCRIPT2) $(DATA_DIR)/pbPhiloIngi.csv $(PLOT_OUTPUT_COMPARAISON1) $(DATA_DIR)/philosophesActiveIngi.csv $(DATA_DIR)/philosophesActive2Ingi.csv 
 PLOT_OUTPUT_COMPARAISON2 = plots/Comparaison3Graphs2.png
 Comparaison3Graphs2: $(SCRIPT2)
-	python3 $(SCRIPT2) $(DATA_DIR)/prodCons2Ingi.csv $(PLOT_OUTPUT_COMPARAISON2) $(DATA_DIR)/ProdConsActiveIngi.csv $(DATA_DIR)/ProdConsActive2Ingi.csv 
+	python3 $(SCRIPT2) $(DATA_DIR)/ProdCons2Ingi.csv $(PLOT_OUTPUT_COMPARAISON2) $(DATA_DIR)/ProdConsActiveIngi.csv $(DATA_DIR)/prodConsActive2Ingi.csv 
 PLOT_OUTPUT_COMPARAISON3 = plots/Comparaison3Graphs3.png
 Comparaison3Graphs3: $(SCRIPT2)
 	python3 $(SCRIPT2) $(DATA_DIR)/EcritLect2Ingi.csv $(PLOT_OUTPUT_COMPARAISON3) $(DATA_DIR)/readActiveIngi.csv $(DATA_DIR)/readActive2Ingi.csv 
