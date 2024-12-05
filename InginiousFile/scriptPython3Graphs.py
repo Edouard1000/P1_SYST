@@ -94,7 +94,7 @@ def creer_graphique_combine(titre, nom_sortie):
 base_name = os.path.splitext(os.path.basename(fileCSV1))[0]
 if base_name == "pbPhiloIngi":
     titre = "Comparaison des Performances Philosophes : Sans TAS, Avec TAS, Avec TATAS"
-elif base_name == "prodCons2Ingi":
+elif base_name == "ProdCons2Ingi":
     titre = "Comparaison des Performances Prod/cons : Sans TAS, Avec TAS, Avec TATAS"
 elif base_name == "EcritLect2Ingi":
     titre = "Comparaison des Performances Writer/reader : Sans TAS, Avec TAS, Avec TATAS"

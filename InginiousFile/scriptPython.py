@@ -43,13 +43,18 @@ if paramatreDefaut:
 
 # Dictionnaire pour mapper les noms de fichiers aux titres
 titres_graphiques = {
-    'EcritLect2Ingi': "Test de Performance Ecriture-Lecture (Version 2)",
-    'EcritLectIngi': "Test de Performance Ecriture-Lecture",
-    'pbPhiloIngi': "Test de Performance Philosophe",
+    'EcritLect2Ingi': "Test de Performance Écriture-Lecture (Version 2)",
+    'EcritLectIngi': "Test de Performance Écriture-Lecture",
+    'pbPhiloIngi': "Test de Performance Philosophes",
+    'philosophesActive2Ingi': "Test de Performance Philosophes (Version 2, Attente Active)",
+    'philosophesActiveIngi': "Test de Performance Philosophes (Attente Active)",
     'ProdCons2Ingi': "Test de Performance Producteur-Consommateur (Version 2)",
+    'prodConsActive2Ingi': "Test de Performance Producteur-Consommateur (Version 2, Attente Active)",
     'ProdConsActiveIngi': "Test de Performance Producteur-Consommateur (Attente Active)",
     'ProdConsIngi': "Test de Performance Producteur-Consommateur",
-    'TestAndTestIngi': "Test de Performance Test-and-test-and-set",
+    'readActive2Ingi': "Test de Performance Lecture Active (Version 2)",
+    'readActiveIngi': "Test de Performance Lecture Active",
+    'TestAndTestIngi': "Test de Performance Test-and-Test-and-Set",
     'TestVerrouIngi': "Test de Performance Test-and-Set",
 }
 

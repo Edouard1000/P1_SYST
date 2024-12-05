@@ -185,7 +185,8 @@ CsvReadActive2: $(OBJ_DIR)/readActive2 | $(CSV_DIR)
 
 CSV_FILES = $(wildcard $(DATA_DIR)/*.csv)
 PNG_FILES = $(patsubst $(DATA_DIR)/%.csv, $(PLOT_DIR)/%.png, $(CSV_FILES))
-
+print_csv_length:
+	@echo "Number of CSV files: $(words $(CSV_FILES))"
 plot: $(PNG_FILES)
 
 $(PLOT_DIR)/%.png: $(DATA_DIR)/%.csv $(SCRIPT) | $(PLOT_DIR)
