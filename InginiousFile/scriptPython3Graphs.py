@@ -79,9 +79,8 @@ def creer_graphique_combine(titre, nom_sortie):
     # Fixer les ticks de l'axe des X (2, 4, 8, 16, 32)
     plt.xticks([2, 4, 8, 16, 32])
 
-    # Configurer les axes et le fond
-    plt.ylim(0)  # Limiter l'axe des ordonnées à partir de 0
-    plt.grid(axis='y', linestyle='--', alpha=0.7)
+    plt.yscale('log')  # Appliquer l'échelle logarithmique à l'axe Y
+    plt.ylim(0.0001, 1000)  
 
     # Ajuster la disposition pour éviter le chevauchement
     plt.tight_layout()

@@ -26,7 +26,7 @@ SCRIPT2 = scriptPython3Graphs.py
 
 
 
-all: CsvReadActive CsvReadActive2
+all: CsvReadActive
 
 #CsvpbPhilo CsvPhilosopesActive CsvPhilosopesActive2 CsvProdCons CsvProdCons2 CsvReaderWriter CsvReaderWriter2 CsvTestVerrou CsvTestAndTest CsvProdConsActive CsvProdConsActive2 CsvReadActive CsvReadActive2
 
@@ -198,13 +198,13 @@ TASvsTATAS: $(SCRIPT) | $(PLOT_DIR)
 	python3 $(SCRIPT) $(DATA_DIR)/TestVerrouIngi.csv $(PLOT_OUTPUT) $(DATA_DIR)/TestAndTestIngi.csv
 #plot comparaison 3 graphs : 
 PLOT_OUTPUT_COMPARAISON1 = plots/Comparaison3Graphs1.png
-Comparaison3Graphs1: $(SCRIPT2)
+Comparaison3Graphs1: $(SCRIPT2) | $(PLOT_DIR)
 	python3 $(SCRIPT2) $(DATA_DIR)/pbPhiloIngi.csv $(PLOT_OUTPUT_COMPARAISON1) $(DATA_DIR)/philosophesActiveIngi.csv $(DATA_DIR)/philosophesActive2Ingi.csv 
 PLOT_OUTPUT_COMPARAISON2 = plots/Comparaison3Graphs2.png
-Comparaison3Graphs2: $(SCRIPT2)
+Comparaison3Graphs2: $(SCRIPT2) | $(PLOT_DIR)
 	python3 $(SCRIPT2) $(DATA_DIR)/ProdCons2Ingi.csv $(PLOT_OUTPUT_COMPARAISON2) $(DATA_DIR)/ProdConsActiveIngi.csv $(DATA_DIR)/prodConsActive2Ingi.csv 
 PLOT_OUTPUT_COMPARAISON3 = plots/Comparaison3Graphs3.png
-Comparaison3Graphs3: $(SCRIPT2)
+Comparaison3Graphs3: $(SCRIPT2) | $(PLOT_DIR)
 	python3 $(SCRIPT2) $(DATA_DIR)/EcritLect2Ingi.csv $(PLOT_OUTPUT_COMPARAISON3) $(DATA_DIR)/readActiveIngi.csv $(DATA_DIR)/readActive2Ingi.csv 
 #allCsv: CsvpbPhilo CsvProdCons CsvReaderWriter CsvTestVerrou CsvTestAndTest CsvProdConsActive  //Je sais pas si c'est necessaire pour Inginious
 
