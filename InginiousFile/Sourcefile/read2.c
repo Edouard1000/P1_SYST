@@ -8,7 +8,7 @@
 
 pthread_mutex_t mutex;
 sem_t db; // Sémaphore pour l'accès à la base de données
-sem_t priority; // Priorité pour les écrivains
+sem_t priority; 
 int readcount = 0; // Nombre de lecteurs actifs
 int total_writes = 0;
 int total_reads = 0;
@@ -48,7 +48,7 @@ void *reader(void *arg) {
         total_reads++;
         pthread_mutex_unlock(&mutex);
 
-        sem_wait(&priority); // Donne la priorité aux écrivains
+        sem_wait(&priority); 
         pthread_mutex_lock(&mutex);
 
         readcount++;
