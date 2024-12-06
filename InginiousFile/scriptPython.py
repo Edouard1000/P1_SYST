@@ -29,6 +29,7 @@ outputFile = sys.argv[2]
 
 # Extraction et traitement des données
 data = pd.read_csv(fileCSV)
+data.iloc[:, 1:] = data.iloc[:, 1:] / 1000 
 
 if paramatreDefaut:
     data2 = pd.read_csv(fileCSV2)

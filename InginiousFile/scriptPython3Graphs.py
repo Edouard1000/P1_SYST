@@ -25,6 +25,11 @@ data1 = pd.read_csv(fileCSV1)
 data2 = pd.read_csv(fileCSV2)
 data3 = pd.read_csv(fileCSV3)
 
+
+#data1.iloc[:, 1:] = data1.iloc[:, 1:] / 1000 
+#data2.iloc[:, 1:] = data2.iloc[:, 1:] / 1000
+#data3.iloc[:, 1:] = data3.iloc[:, 1:] / 1000
+
 # Calculer la moyenne et l'écart-type pour chaque fichier
 data1['mean_time'] = data1.iloc[:, 1:].mean(axis=1)
 data1['std_time'] = data1.iloc[:, 1:].std(axis=1)

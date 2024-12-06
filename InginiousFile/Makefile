@@ -26,7 +26,7 @@ SCRIPT2 = scriptPython3Graphs.py
 
 
 
-all: CsvReadActive
+all: CsvReaderWriter2 CsvTestVerrou CsvTestAndTest CsvProdConsActive
 
 #CsvpbPhilo CsvPhilosopesActive CsvPhilosopesActive2 CsvProdCons CsvProdCons2 CsvReaderWriter CsvReaderWriter2 CsvTestVerrou CsvTestAndTest CsvProdConsActive CsvProdConsActive2 CsvReadActive CsvReadActive2
 
@@ -130,55 +130,55 @@ $(OBJ_DIR)/readActive2: $(OBJ_DIR)/readActive2.o $(OBJ_DIR)/verrou.o | $(OBJ_DIR
 ##########Debut des cibles pour le Csv ###############
 
 CsvpbPhilo: $(OBJ_DIR)/pbPhilo | $(CSV_DIR)
-	chmod +x scriptBash.sh
-	./scriptBash.sh $(OBJ_DIR)/pbPhilo $(CSV_DIR)/pbPhilo.csv
+	chmod +x scriptBash2.sh
+	./scriptBash2.sh $(OBJ_DIR)/pbPhilo $(CSV_DIR)/pbPhilo.csv
 
 CsvProdCons: $(OBJ_DIR)/prodCons | $(CSV_DIR)
-	chmod +x scriptBash.sh
-	./scriptBash.sh $(OBJ_DIR)/prodCons $(CSV_DIR)/ProdCons.csv
+	chmod +x scriptBash2.sh
+	./scriptBash2.sh $(OBJ_DIR)/prodCons $(CSV_DIR)/ProdCons.csv
 
 CsvProdCons2: $(OBJ_DIR)/prodCons2 | $(CSV_DIR)
-	chmod +x scriptBash.sh
-	./scriptBash.sh $(OBJ_DIR)/prodCons2 $(CSV_DIR)/ProdCons2.csv
+	chmod +x scriptBash2.sh
+	./scriptBash2.sh $(OBJ_DIR)/prodCons2 $(CSV_DIR)/ProdCons2.csv
 
 CsvReaderWriter: $(OBJ_DIR)/readerWriter | $(CSV_DIR)
-	chmod +x scriptBash.sh
-	./scriptBash.sh $(OBJ_DIR)/readerWriter $(CSV_DIR)/EcritLect.csv
+	chmod +x scriptBash2.sh
+	./scriptBash2.sh $(OBJ_DIR)/readerWriter $(CSV_DIR)/EcritLect.csv
 
 CsvReaderWriter2: $(OBJ_DIR)/readerWriter2 | $(CSV_DIR)
-	chmod +x scriptBash.sh
-	./scriptBash.sh $(OBJ_DIR)/readerWriter2 $(CSV_DIR)/EcritLect2.csv
+	chmod +x scriptBash2.sh
+	./scriptBash2.sh $(OBJ_DIR)/readerWriter2 $(CSV_DIR)/EcritLect2.csv
 
 ###### Csv De test and (Test) and set#################
 CsvTestVerrou: $(OBJ_DIR)/testVerrou | $(CSV_DIR)
-	chmod +x scriptBash.sh
-	./scriptBash.sh $(OBJ_DIR)/testVerrou $(CSV_DIR)/TestVerrou.csv
+	chmod +x scriptBash2.sh
+	./scriptBash2.sh $(OBJ_DIR)/testVerrou $(CSV_DIR)/TestVerrou.csv
 
 CsvTestAndTest: $(OBJ_DIR)/testANDtest | $(CSV_DIR)
-	chmod +x scriptBash.sh
-	./scriptBash.sh $(OBJ_DIR)/testANDtest $(CSV_DIR)/TestAndTest.csv
+	chmod +x scriptBash2.sh
+	./scriptBash2.sh $(OBJ_DIR)/testANDtest $(CSV_DIR)/TestAndTest.csv
 CsvPhilosopesActive: $(OBJ_DIR)/philosophesActive | $(CSV_DIR)
-	chmod +x scriptBash.sh
-	./scriptBash.sh $(OBJ_DIR)/philosophesActive $(CSV_DIR)/philosophesActive.csv
+	chmod +x scriptBash2.sh
+	./scriptBash2.sh $(OBJ_DIR)/philosophesActive $(CSV_DIR)/philosophesActive.csv
 CsvPhilosopesActive2: $(OBJ_DIR)/philosophesActive2 | $(CSV_DIR)
-	chmod +x scriptBash.sh
-	./scriptBash.sh $(OBJ_DIR)/philosophesActive2 $(CSV_DIR)/philosophesActive2.csv
+	chmod +x scriptBash2.sh
+	./scriptBash2.sh $(OBJ_DIR)/philosophesActive2 $(CSV_DIR)/philosophesActive2.csv
 
 
 CsvProdConsActive: $(OBJ_DIR)/prodConsActive | $(CSV_DIR)
-	chmod +x scriptBash.sh
-	./scriptBash.sh $(OBJ_DIR)/prodConsActive $(CSV_DIR)/ProdConsActive.csv
+	chmod +x scriptBash2.sh
+	./scriptBash2.sh $(OBJ_DIR)/prodConsActive $(CSV_DIR)/ProdConsActive.csv
 CsvProdConsActive2: $(OBJ_DIR)/prodConsActive2 | $(CSV_DIR)
-	chmod +x scriptBash.sh
-	./scriptBash.sh $(OBJ_DIR)/prodConsActive2 $(CSV_DIR)/prodConsActive2.csv
+	chmod +x scriptBash2.sh
+	./scriptBash2.sh $(OBJ_DIR)/prodConsActive2 $(CSV_DIR)/prodConsActive2.csv
 
 CsvReadActive: $(OBJ_DIR)/readActive | $(CSV_DIR)
-	chmod +x scriptBash.sh
-	./scriptBash.sh $(OBJ_DIR)/readActive $(CSV_DIR)/readActive.csv
+	chmod +x scriptBash2.sh
+	./scriptBash2.sh $(OBJ_DIR)/readActive $(CSV_DIR)/readActive.csv
 
 CsvReadActive2: $(OBJ_DIR)/readActive2 | $(CSV_DIR)
-	chmod +x scriptBash.sh
-	./scriptBash.sh $(OBJ_DIR)/readActive2 $(CSV_DIR)/readActive2.csv
+	chmod +x scriptBash2.sh
+	./scriptBash2.sh $(OBJ_DIR)/readActive2 $(CSV_DIR)/readActive2.csv
 ####### Fin des cibles pour Csv: (Attention) Pas complet #######
 
 # Génération des graphes pour tous les fichiers CSV
@@ -207,6 +207,9 @@ PLOT_OUTPUT_COMPARAISON3 = plots/Comparaison3Graphs3.png
 Comparaison3Graphs3: $(SCRIPT2) | $(PLOT_DIR)
 	python3 $(SCRIPT2) $(DATA_DIR)/EcritLect2Ingi.csv $(PLOT_OUTPUT_COMPARAISON3) $(DATA_DIR)/readActiveIngi.csv $(DATA_DIR)/readActive2Ingi.csv 
 #allCsv: CsvpbPhilo CsvProdCons CsvReaderWriter CsvTestVerrou CsvTestAndTest CsvProdConsActive  //Je sais pas si c'est necessaire pour Inginious
+
+#plotReaderWriter: CsvReaderWriter | $(PLOT_DIR)
+#python3 ./scriptPython.py $(DATA_DIR)/readActive2Ingi.csv $(PLOT_DIR)/readerwriter_plot.png
 
 
 # Nettoyage des fichiers objets et exécutables
