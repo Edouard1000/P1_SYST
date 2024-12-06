@@ -29,3 +29,5 @@ Compilation : make plot
 Nettoyage : make clean
 
 
+Note importante : 
+Un problème subsiste dans l'organisation des fichiers pour les tests de performance des lecteurs/écrivains. Le fichier read2.c a été utilisé pour générer les résultats liés aux primitives POSIX. Cependant, le fichier read.c a été modifié pour intégrer nos propres mutex et sémaphores personnalisés (TAS/TATAS), et read2.c n'a pas été converti pour ces mécanismes. Cependant read.c et read2.c ont éxactement les mêmes graphes lors de la compilation.
