@@ -28,7 +28,7 @@ CSV_FILES = \
 
 
 
-all: TASvsTATAS Comparaison3Graphs1 Comparaison3Graphs2 Comparaison3Graphs3 help
+all: plots/pbPhiloIngi.png plots/ProdCons2Ingi.png plots/EcritLect2Ingi.png TASvsTATAS Comparaison3Graphs1 Comparaison3Graphs2 Comparaison3Graphs3 help
 
 
 
@@ -176,7 +176,9 @@ CsvReadActive2: $(OBJ_DIR)/readActive2 | $(CSV_DIR)
 	chmod +x scriptBash2.sh
 	./scriptBash2.sh $(OBJ_DIR)/readActive2 $(CSV_DIR)/readActive2.csv
 ####### Fin des cibles pour Csv: (Attention) Pas complet #######
+allCsv: CsvpbPhilo CsvProdCons2 CsvReaderWriter CsvTestVerrou CsvTestAndTest CsvPhilosopesActive CsvPhilosopesActive2 CsvProdConsActive CsvProdConsActive2 CsvReadActive CsvReadActive2  
 
+	
 # Génération des graphes pour tous les fichiers CSV
 
 CSV_FILES = $(wildcard $(DATA_DIR)/*.csv)
@@ -190,6 +192,10 @@ $(PLOT_DIR)/%.png: $(DATA_DIR)/%.csv $(SCRIPT) | $(PLOT_DIR)
 
 
 ##### Cibles pour les plots de la tache 1 ########
+plots/pbPhiloIngi.png: plots/pbPhiloIngi.png
+plots/ProdCons2Ingi.png: plots/ProdCons2Ingi.png
+
+plots/EcritLect2Ingi.png: plots/EcritLect2Ingi.png
 
 plotPhilo: CsvpbPhilo | $(PLOT_DIR)
 	python3 scriptPython.py $(CSV_DIR)/pbPhilo.csv $(PLOT_DIR)/philo_plot.png
@@ -239,7 +245,7 @@ Comparaison3Graphs2loc: $(SCRIPT2) CsvProdCons2 CsvProdConsActive CsvProdConsAct
 PLOT_OUTPUT_COMPARAISON3_LOCALE = plots/Comparaison3Graphs3loc.png
 Comparaison3Graphs3loc: $(SCRIPT2) CsvReaderWriter CsvReadActive CsvReadActive2 | $(PLOT_DIR)
 	python3 $(SCRIPT2) $(CSV_DIR)/EcritLect.csv $(PLOT_OUTPUT_COMPARAISON3_LOCALE) $(CSV_DIR)/readActive2.csv $(CSV_DIR)/readActive.csv
-
+make allPlot: plotPhilo plotProdCons plotReaderWriter TASvsTATASloc Comparaison3Graphs1loc Comparaison3Graphs2loc Comparaison3Graphs3loc
 # Nettoyage des fichiers objets et exécutables
 clean:
 	rm -rf $(OBJ_DIR) $(CSV_DIR) $(PLOT_DIR)

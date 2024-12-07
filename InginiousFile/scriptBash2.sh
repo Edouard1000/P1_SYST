@@ -18,7 +18,7 @@ Threads="2 4 8 16 32"
 if [ "$PROG" == "pbPhilo" ]; then
     for t in $Threads; do
         echo -n "$t," >> "$LOGS"  # Ajouter le nombre de threads dans le fichier de log
-        
+        echo "Running $t thread(s)..."
 
         # Exécuter le programme Philosophe 5 fois et enregistrer les temps dans le fichier
         for i in {1..5}; do
@@ -34,7 +34,7 @@ if [ "$PROG" == "pbPhilo" ]; then
 elif [ "$PROG" == "philosophesActive" ]; then
     for t in $Threads; do
         echo -n "$t," >> "$LOGS"  # Ajouter le nombre de threads dans le fichier de log
-        
+        echo "Running $t thread(s)..."
 
         # Exécuter le programme Philosophe 5 fois et enregistrer les temps dans le fichier
         for i in {1..5}; do
@@ -50,7 +50,7 @@ elif [ "$PROG" == "philosophesActive" ]; then
 elif [ "$PROG" == "philosophesActive2" ]; then
     for t in $Threads; do
         echo -n "$t," >> "$LOGS"  # Ajouter le nombre de threads dans le fichier de log
-        
+        echo "Running $t thread(s)..."
 
         # Exécuter le programme Philosophe 5 fois et enregistrer les temps dans le fichier
         for i in {1..5}; do
@@ -66,7 +66,7 @@ elif [ "$PROG" == "philosophesActive2" ]; then
 elif [ "$PROG" == "prodCons" ]; then
     for t in $Threads; do
         echo -n "$t," >> "$LOGS"  # Ajouter le nombre de threads dans le fichier de log
-        
+        echo "Running $t thread(s)..."
 
         # Exécuter le programme ProdCons 5 fois et enregistrer les temps dans le fichier
         arg1=$((t/2))
@@ -84,7 +84,7 @@ elif [ "$PROG" == "prodCons" ]; then
 elif [ "$PROG" == "testVerrou" ]; then
     for t in 1 2 4 8 16 32; do
         echo -n "$t," >> "$LOGS"  # Ajouter le nombre de threads dans le fichier de log
-        
+        echo "Running $t thread(s)..."
 
         # Exécuter le programme ProdCons 5 fois et enregistrer les temps dans le fichier
 
@@ -101,7 +101,7 @@ elif [ "$PROG" == "testVerrou" ]; then
 elif [ "$PROG" == "testANDtest" ]; then
     for t in 1 2 4 8 16 32; do
         echo -n "$t," >> "$LOGS"  # Ajouter le nombre de threads dans le fichier de log
-       
+        echo "Running $t thread(s)..."
 
         # Exécuter le programme ProdCons 5 fois et enregistrer les temps dans le fichier
 
@@ -120,7 +120,7 @@ elif [ "$PROG" == "testANDtest" ]; then
 elif [ "$PROG" == "prodConsActive" ]; then
     for t in $Threads; do
         echo -n "$t," >> "$LOGS"  # Ajouter le nombre de threads dans le fichier de log
- 
+        echo "Running $t thread(s)..."
 
         # Exécuter le programme prodConsActive 5 fois et enregistrer les temps dans le fichier
         arg1=$((t/2))
@@ -138,7 +138,7 @@ elif [ "$PROG" == "prodConsActive" ]; then
 elif [ "$PROG" == "prodConsActive2" ]; then
     for t in $Threads; do
         echo -n "$t," >> "$LOGS"  # Ajouter le nombre de threads dans le fichier de log
- 
+        echo "Running $t thread(s)..."
 
         # Exécuter le programme prodConsActive 5 fois et enregistrer les temps dans le fichier
         arg1=$((t/2))
@@ -157,7 +157,7 @@ elif [ "$PROG" == "readActive" ]; then
 
     for t in $Threads; do
         echo -n "$t," >> "$LOGS" # Ajouter le nombre de threads dans le fichier dans la sortie Standart
-
+        echo "Running $t thread(s)..."
         # Exécuter le programme ProdCons 5 fois et enregistrer les temps dans le fichier
         arg1=$((t/2))
         arg2=$((t/2))
@@ -176,7 +176,7 @@ elif [ "$PROG" == "readActive2" ]; then
 
     for t in $Threads; do
         echo -n "$t," >> "$LOGS" # Ajouter le nombre de threads dans le fichier dans la sortie Standart
-
+        echo "Running $t thread(s)..."
         # Exécuter le programme ProdCons 5 fois et enregistrer les temps dans le fichier
         arg1=$((t/2))
         arg2=$((t/2))
@@ -195,7 +195,7 @@ else
     # Si le programme n'est ni "pbPhilo" ni "prodCons"
     for t in $Threads; do
         echo -n "$t," >> "$LOGS"  # Ajouter le nombre de threads dans le fichier de log
-
+        echo "Running $t thread(s)..."
 
         # Exécuter le programme ProdCons 5 fois et enregistrer les temps dans le fichier
         arg1=$((t/2))
