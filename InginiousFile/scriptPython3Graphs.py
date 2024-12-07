@@ -114,7 +114,7 @@ elif base_name == "ProdCons2":
 elif base_name == "EcritLect2Ingi":
     defaultCase=False
     titre = "Comparaison des Performances Writer/reader : Sans TAS, Avec TAS, Avec TATAS"
-elif base_name == "EcritLect":
+elif base_name == "EcritLect2":
     titre = "Comparaison des Performances Writer/reader : Sans TAS, Avec TAS, Avec TATAS (Donées Locale)"
     defaultCase=False
 

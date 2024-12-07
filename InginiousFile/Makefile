@@ -239,12 +239,12 @@ Comparaison3Graphs1loc: $(SCRIPT2) CsvpbPhilo CsvPhilosopesActive CsvPhilosopesA
 
 PLOT_OUTPUT_COMPARAISON2_LOCALE = plots/Comparaison3Graphs2loc.png
 Comparaison3Graphs2loc: $(SCRIPT2) CsvProdCons2 CsvProdConsActive CsvProdConsActive2 | $(PLOT_DIR)
-	python3 $(SCRIPT2) $(CSV_DIR)/ProdCons2.csv $(PLOT_OUTPUT_COMPARAISON2_LOCALE) $(CSV_DIR)/prodConsActive2.csv $(CSV_DIR)/ProdConsActive.csv
+	python3 $(SCRIPT2) $(CSV_DIR)/ProdCons2.csv $(PLOT_OUTPUT_COMPARAISON2_LOCALE) $(CSV_DIR)/ProdConsActive.csv $(CSV_DIR)/prodConsActive2.csv
 
 
 PLOT_OUTPUT_COMPARAISON3_LOCALE = plots/Comparaison3Graphs3loc.png
-Comparaison3Graphs3loc: $(SCRIPT2) CsvReaderWriter CsvReadActive CsvReadActive2 | $(PLOT_DIR)
-	python3 $(SCRIPT2) $(CSV_DIR)/EcritLect.csv $(PLOT_OUTPUT_COMPARAISON3_LOCALE) $(CSV_DIR)/readActive2.csv $(CSV_DIR)/readActive.csv
+Comparaison3Graphs3loc: $(SCRIPT2) CsvReaderWriter2 CsvReadActive CsvReadActive2 | $(PLOT_DIR)
+	python3 $(SCRIPT2) $(CSV_DIR)/EcritLect2.csv $(PLOT_OUTPUT_COMPARAISON3_LOCALE) $(CSV_DIR)/readActive.csv $(CSV_DIR)/readActive2.csv
 make allPlot: plotPhilo plotProdCons plotReaderWriter TASvsTATASloc Comparaison3Graphs1loc Comparaison3Graphs2loc Comparaison3Graphs3loc
 # Nettoyage des fichiers objets et exécutables
 clean:
