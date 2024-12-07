@@ -29,7 +29,7 @@ outputFile = sys.argv[2]
 
 # Extraction et traitement des données
 data = pd.read_csv(fileCSV)
-data.iloc[:, 1:] = data.iloc[:, 1:] / 1000 
+
 
 if paramatreDefaut:
     data2 = pd.read_csv(fileCSV2)
@@ -57,6 +57,7 @@ titres_graphiques = {
     'readActiveIngi': "Test de Performance Lecture Active",
     'TestAndTestIngi': "Test de Performance Test-and-Test-and-Set",
     'TestVerrouIngi': "Test de Performance Test-and-Set",
+    'TestVerrou' : "Test de Performance TAS vs TATAS (Données Locale)",
 }
 
 # Déterminer le titre basé sur le nom du fichier

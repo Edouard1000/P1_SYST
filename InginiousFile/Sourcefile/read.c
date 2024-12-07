@@ -119,7 +119,7 @@ void* reader(void* arg){
         pthread_mutex_lock(&mutexReader);
         readCount--;
         if(readCount==0)
-            sem_post(&writerSem);                 // je pense que c'est le writer dans le quue qui va s'execute à ce niveau et le reader en attente ne va s'execute que s'il ya plus de lecture et cr ap que le thread courant ait unlock dbmutex;
+            sem_post(&writerSem);                 
         pthread_mutex_unlock(&mutexReader);
 
         

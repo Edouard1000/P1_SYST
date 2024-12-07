@@ -14,7 +14,7 @@ DATA_DIR = DataInginious
 SCRIPT = scriptPython.py
 SCRIPT2 = scriptPython3Graphs.py
 # Liste des fichiers CSV
-#CSV_FILES = \
+CSV_FILES = \
 	EcritLect2Ingi.csv \
 	EcritLectIngi.csv \
 	pbPhiloIngi.csv \
@@ -22,13 +22,15 @@ SCRIPT2 = scriptPython3Graphs.py
 	ProdConsActiveIngi.csv \
 	ProdConsIngi.csv \
 	TestAndTestIngi.csv \
-	TestVerrouIngi.csv
+	TestVerrouIngi.csv \
+	readActive.csv \
+	readActive2.csv
 
 
 
-all: CsvReaderWriter2 CsvTestVerrou CsvTestAndTest CsvProdConsActive
+all: TASvsTATAS Comparaison3Graphs1 Comparaison3Graphs2 Comparaison3Graphs3 help
 
-#CsvpbPhilo CsvPhilosopesActive CsvPhilosopesActive2 CsvProdCons CsvProdCons2 CsvReaderWriter CsvReaderWriter2 CsvTestVerrou CsvTestAndTest CsvProdConsActive CsvProdConsActive2 CsvReadActive CsvReadActive2
+
 
 # Créer les répertoires nécessaires
 $(OBJ_DIR):
@@ -44,9 +46,6 @@ $(PLOT_DIR):
 ######## Debut Tache 1#########
 
 $(OBJ_DIR)/pbPhilo: $(SRC_DIR)/pbPhilosophesVF.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) $< -o $@
-
-$(OBJ_DIR)/prodCons: $(SRC_DIR)/prodConsvf.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) $< -o $@
 
 #########Prod Cons Version 2 ##########
@@ -133,9 +132,6 @@ CsvpbPhilo: $(OBJ_DIR)/pbPhilo | $(CSV_DIR)
 	chmod +x scriptBash2.sh
 	./scriptBash2.sh $(OBJ_DIR)/pbPhilo $(CSV_DIR)/pbPhilo.csv
 
-CsvProdCons: $(OBJ_DIR)/prodCons | $(CSV_DIR)
-	chmod +x scriptBash2.sh
-	./scriptBash2.sh $(OBJ_DIR)/prodCons $(CSV_DIR)/ProdCons.csv
 
 CsvProdCons2: $(OBJ_DIR)/prodCons2 | $(CSV_DIR)
 	chmod +x scriptBash2.sh
@@ -192,6 +188,21 @@ plot: $(PNG_FILES)
 $(PLOT_DIR)/%.png: $(DATA_DIR)/%.csv $(SCRIPT) | $(PLOT_DIR)
 	python3 $(SCRIPT) $< $@
 
+
+##### Cibles pour les plots de la tache 1 ########
+
+plotPhilo: CsvpbPhilo | $(PLOT_DIR)
+	python3 scriptPython.py $(CSV_DIR)/pbPhilo.csv $(PLOT_DIR)/philo_plot.png
+
+plotProdCons: CsvProdCons2 | $(PLOT_DIR)
+	python3 ./scriptPython.py $(CSV_DIR)/ProdCons2.csv $(PLOT_DIR)/prodcons_plot.png
+
+plotReaderWriter: CsvReaderWriter | $(PLOT_DIR)
+	python3 ./scriptPython.py $(CSV_DIR)/EcritLect.csv $(PLOT_DIR)/readerwriter_plot.png
+
+##### Fin Cibles pour les plots de la tache 1 ########
+
+###### Plots à partir des données Inginious ######## 
 # plot TASvsTATAS
 PLOT_OUTPUT = plots/TASvsTATAS.png
 TASvsTATAS: $(SCRIPT) | $(PLOT_DIR)
@@ -206,12 +217,68 @@ Comparaison3Graphs2: $(SCRIPT2) | $(PLOT_DIR)
 PLOT_OUTPUT_COMPARAISON3 = plots/Comparaison3Graphs3.png
 Comparaison3Graphs3: $(SCRIPT2) | $(PLOT_DIR)
 	python3 $(SCRIPT2) $(DATA_DIR)/EcritLect2Ingi.csv $(PLOT_OUTPUT_COMPARAISON3) $(DATA_DIR)/readActiveIngi.csv $(DATA_DIR)/readActive2Ingi.csv 
-#allCsv: CsvpbPhilo CsvProdCons CsvReaderWriter CsvTestVerrou CsvTestAndTest CsvProdConsActive  //Je sais pas si c'est necessaire pour Inginious
 
-#plotReaderWriter: CsvReaderWriter | $(PLOT_DIR)
-#python3 ./scriptPython.py $(DATA_DIR)/readActive2Ingi.csv $(PLOT_DIR)/readerwriter_plot.png
+###### Fin Plots à partir des données Inginious ########
 
+
+###### Plots à partir des données Genérée apres l'execution actuelles (données locales) ########
+
+PLOT_OUTPUT_LOCALE = plots/TASvsTATASloc.png
+TASvsTATASloc: $(SCRIPT) CsvTestVerrou CsvTestAndTest | $(PLOT_DIR)
+	python3 $(SCRIPT) $(CSV_DIR)/TestVerrou.csv $(PLOT_OUTPUT_LOCALE) $(CSV_DIR)/TestAndTest.csv 
+
+PLOT_OUTPUT_COMPARAISON1_LOCALE = plots/Comparaison3Graphs1loc.png
+Comparaison3Graphs1loc: $(SCRIPT2) CsvpbPhilo CsvPhilosopesActive CsvPhilosopesActive2 | $(PLOT_DIR)
+	python3 $(SCRIPT2) $(CSV_DIR)/pbPhilo.csv $(PLOT_OUTPUT_COMPARAISON1_LOCALE) $(CSV_DIR)/philosophesActive.csv $(CSV_DIR)/philosophesActive2.csv 
+
+PLOT_OUTPUT_COMPARAISON2_LOCALE = plots/Comparaison3Graphs2loc.png
+Comparaison3Graphs2loc: $(SCRIPT2) CsvProdCons2 CsvProdConsActive CsvProdConsActive2 | $(PLOT_DIR)
+	python3 $(SCRIPT2) $(CSV_DIR)/ProdCons2.csv $(PLOT_OUTPUT_COMPARAISON2_LOCALE) $(CSV_DIR)/prodConsActive2.csv $(CSV_DIR)/ProdConsActive.csv
+
+
+PLOT_OUTPUT_COMPARAISON3_LOCALE = plots/Comparaison3Graphs3loc.png
+Comparaison3Graphs3loc: $(SCRIPT2) CsvReaderWriter CsvReadActive CsvReadActive2 | $(PLOT_DIR)
+	python3 $(SCRIPT2) $(CSV_DIR)/EcritLect.csv $(PLOT_OUTPUT_COMPARAISON3_LOCALE) $(CSV_DIR)/readActive2.csv $(CSV_DIR)/readActive.csv
 
 # Nettoyage des fichiers objets et exécutables
 clean:
 	rm -rf $(OBJ_DIR) $(CSV_DIR) $(PLOT_DIR)
+
+
+help:
+	@echo "Usage: make <target>"
+	@echo ""
+	@echo "Targets disponibles :"
+	@echo ""
+	@echo "1. Générer les fichiers CSV :"
+	@echo "   - CsvpbPhilo           : Génère le fichier CSV pour le problème des philosophes."
+	@echo "   - CsvProdCons2         : Génère le fichier CSV pour le problème producteur-consommateur."
+	@echo "   - CsvReaderWriter      : Génère le fichier CSV pour le problème lecteur-écrivain."
+	@echo "   - CsvReaderWriter2     : Génère le fichier CSV pour le problème lecteur-écrivain (version 2)."
+	@echo "   - CsvTestVerrou        : Génère le fichier CSV pour le test de verrou (TestAndSet)."
+	@echo "   - CsvTestAndTest       : Génère le fichier CSV pour le test de synchronisation TestAndTest."
+	@echo "   - CsvPhilosopesActive  : Génère le fichier CSV pour le problème des philosophes actifs (avec TAS)."
+	@echo "   - CsvPhilosopesActive2 : Génère le fichier CSV pour le problème des philosophes actifs (Avec TATAS)."
+	@echo "   - CsvProdConsActive    : Génère le fichier CSV pour le problème producteur-consommateur actif (avec TAS)."
+	@echo "   - CsvProdConsActive2   : Génère le fichier CSV pour le problème producteur-consommateur actif (avec TATAS)."
+	@echo "   - CsvReadActive        : Génère le fichier CSV pour le problème lecteur-écrivain actif (avec TAS)."
+	@echo "   - CsvReadActive2       : Génère le fichier CSV pour le problème lecteur-écrivain actif (avec TATAS)."
+	@echo ""
+	@echo "2. Générer les plots (graphes) :"
+	@echo "   - plotPhilo            : Génère le graphique pour le problème des philosophes."
+	@echo "   - plotProdCons         : Génère le graphique pour le problème producteur-consommateur."
+	@echo "   - plotReaderWriter     : Génère le graphique pour le problème lecteur-écrivain."
+	@echo "   - TASvsTATAS           : Génère un graphique comparatif entre TestVerrou et TestAndTest avec les données Inginious."
+	@echo "   - TASvsTATASloc        : Génère un graphique comparatif entre TestVerrou et TestAndTest avec les données locales."
+	@echo "   - Comparaison3Graphs1  : Génère un graphique comparatif pour les philosophes avec les données Inginious (comparaison POxis TAS et TATAS)."
+	@echo "   - Comparaison3Graphs1loc: Génère un graphique comparatif pour les philosophes avec les données locales (comparaison POxis TAS et TATAS)."
+	@echo "   - Comparaison3Graphs2  : Génère un graphique comparatif pour les producteurs-consommateurs avec les données Inginious (comparaison POxis TAS et TATAS)."
+	@echo "   - Comparaison3Graphs2loc: Génère un graphique comparatif pour les producteurs-consommateurs avec les données locales (comparaison POxis TAS et TATAS)."
+	@echo "   - Comparaison3Graphs3  : Génère un graphique comparatif pour les lecteurs-écrivains avec les données Inginious (comparaison POxis TAS et TATAS)."
+	@echo "   - Comparaison3Graphs3loc: Génère un graphique comparatif pour les lecteurs-écrivains avec les données locales (comparaison POxis TAS et TATAS)."
+	@echo "   - readvslec            : Génère un graphique comparatif entre les lectures et les écritures avec les données Inginious."
+	@echo "   - readvslecloc         : Génère un graphique comparatif entre les lectures et les écritures avec les données locales."
+	@echo ""
+	@echo "3. Cibles supplémentaires :"
+	@echo "   - clean                : Supprime les fichiers objets, les fichiers CSV, et les graphiques générés."
+

@@ -40,8 +40,10 @@ data2['std_time'] = data2.iloc[:, 1:].std(axis=1)
 data3['mean_time'] = data3.iloc[:, 1:].mean(axis=1)
 data3['std_time'] = data3.iloc[:, 1:].std(axis=1)
 
+defaultCase=True
+
 # Fonction de création du graphique
-def creer_graphique_combine(titre, nom_sortie):
+def creer_graphique_combine(titre, nom_sortie, defaut):
     plt.figure(figsize=(10, 6))
 
     # Tracer les courbes avec les points reliés par une ligne
@@ -84,8 +86,11 @@ def creer_graphique_combine(titre, nom_sortie):
     # Fixer les ticks de l'axe des X (2, 4, 8, 16, 32)
     plt.xticks([2, 4, 8, 16, 32])
 
-    plt.yscale('log')  # Appliquer l'échelle logarithmique à l'axe Y
-    plt.ylim(0.0001, 1000)  
+    if not defaut:
+        plt.yscale('log')  # Appliquer l'échelle logarithmique à l'axe Y
+        plt.ylim(0.0001, 1000)
+    else:
+        plt.ylim(0)    
 
     # Ajuster la disposition pour éviter le chevauchement
     plt.tight_layout()
@@ -98,9 +103,20 @@ def creer_graphique_combine(titre, nom_sortie):
 base_name = os.path.splitext(os.path.basename(fileCSV1))[0]
 if base_name == "pbPhiloIngi":
     titre = "Comparaison des Performances Philosophes : Sans TAS, Avec TAS, Avec TATAS"
+if base_name == "pbPhilo":
+    titre = "Comparaison des Performances Philosophes : Sans TAS, Avec TAS, Avec TATAS (Donées Locale)"
+
 elif base_name == "ProdCons2Ingi":
     titre = "Comparaison des Performances Prod/cons : Sans TAS, Avec TAS, Avec TATAS"
+elif base_name == "ProdCons2":
+    titre = "Comparaison des Performances Prod/cons : Sans TAS, Avec TAS, Avec TATAS (Donées Locale)"
+
 elif base_name == "EcritLect2Ingi":
+    defaultCase=False
     titre = "Comparaison des Performances Writer/reader : Sans TAS, Avec TAS, Avec TATAS"
+elif base_name == "EcritLect":
+    titre = "Comparaison des Performances Writer/reader : Sans TAS, Avec TAS, Avec TATAS (Donées Locale)"
+    defaultCase=False
+
 # Créer le graphique combiné
-creer_graphique_combine(titre, outputFile)
+creer_graphique_combine(titre, outputFile,defaultCase)
